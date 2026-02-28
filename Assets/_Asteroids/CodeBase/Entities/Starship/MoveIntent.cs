@@ -1,6 +1,6 @@
 namespace _Asteroids.CodeBase.Entities.Starship
 {
-    public class MoveIntent
+    public struct MoveIntent
     {
         public bool Thrust;
         public float Rotation;
