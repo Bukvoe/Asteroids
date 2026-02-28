@@ -41,6 +41,15 @@ namespace _Asteroids.CodeBase.Services
             var rotationValue = _rotationAction.ReadValue<float>();
 
             _starship.Movement.SetMoveIntent(new MoveIntent(isAccelerating, rotationValue));
+
+            if (Mathf.Approximately(_primaryAttackAction.ReadValue<float>(), 1f))
+            {
+                _starship.Weapon.ShootPrimary();
+            }
+            else if (Mathf.Approximately(_secondaryAttackAction.ReadValue<float>(), 1f))
+            {
+                _starship.Weapon.ShootSecondary();
+            }
         }
 
         public void Dispose()
