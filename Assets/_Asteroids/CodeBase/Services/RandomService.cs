@@ -18,5 +18,16 @@ namespace _Asteroids.CodeBase.Services
 
             return value;
         }
+
+        public float RandomAngle()
+        {
+            return Random.Range(0f, 360f);
+        }
+
+        private Vector2 RandomDirection()
+        {
+            var angle = RandomAngle();
+            return new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+        }
     }
 }

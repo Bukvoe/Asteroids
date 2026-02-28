@@ -199,7 +199,8 @@ MonoBehaviour:
   _camera: {fileID: 519420031}
   _starship: {fileID: 6989007487784517633}
   _bulletWeaponPrefab: {fileID: 4258941227516353797, guid: a220ca79a5ac46f48a7bde07bfca50fc, type: 3}
-  _bulletPrefab: {fileID: 0}
+  _bulletPrefab: {fileID: 6168947628470820321, guid: d268d2074ef345543b90fc4e4da9b68d, type: 3}
+  _asteroidPrefab: {fileID: 6211795482549401146, guid: 69c263fb8606d754c9c7421e6a5b7609, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
