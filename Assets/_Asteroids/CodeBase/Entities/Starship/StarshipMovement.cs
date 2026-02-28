@@ -86,10 +86,12 @@ namespace _Asteroids.CodeBase.Entities.Starship
         private void Rotate()
         {
             var rotationDelta = _moveIntent.Rotation * _rotationSpeed * Time.fixedDeltaTime;
-            var targetRotation = _rigidbody.rotation + rotationDelta;
+            var newRotation = _rigidbody.rotation + rotationDelta;
 
-            _rigidbody.MoveRotation(targetRotation);
-            OnRotationChanged?.Invoke(targetRotation);
+            _rigidbody.MoveRotation(newRotation);
+
+            var normalizedRotation = Mathf.Repeat(newRotation, 360f);
+            OnRotationChanged?.Invoke(normalizedRotation);
         }
     }
 }

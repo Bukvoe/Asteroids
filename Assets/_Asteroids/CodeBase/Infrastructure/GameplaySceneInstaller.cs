@@ -3,6 +3,7 @@ using _Asteroids.CodeBase.Entities.Asteroid;
 using _Asteroids.CodeBase.Entities.Starship;
 using _Asteroids.CodeBase.Factories.Payloads;
 using _Asteroids.CodeBase.Services;
+using _Asteroids.CodeBase.UI;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -20,6 +21,9 @@ namespace _Asteroids.CodeBase.Infrastructure
 
         [SerializeField, Required] private Asteroid _asteroidPrefab;
 
+        [SerializeField, Required] private HudView _hudView;
+        [SerializeField, Required] private LoseView _loseView;
+
         public override void InstallBindings()
         {
             Container.Bind<Starship>().FromInstance(_starship).AsSingle();
@@ -33,6 +37,11 @@ namespace _Asteroids.CodeBase.Infrastructure
             Container.Bind<GameMapService>().AsSingle();
             Container.BindInterfacesTo<AsteroidService>().AsSingle().NonLazy();
             Container.BindInterfacesTo<InputService>().AsSingle().NonLazy();
+
+            Container.Bind<HudView>().FromInstance(_hudView).AsSingle();
+            Container.BindInterfacesAndSelfTo<HudPresenter>().AsSingle();
+            Container.Bind<LoseView>().FromInstance(_loseView).AsSingle();
+            Container.BindInterfacesAndSelfTo<LosePresenter>().AsSingle();
         }
     }
 }
