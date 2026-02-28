@@ -18,6 +18,7 @@ namespace _Asteroids.CodeBase.Infrastructure
 
             Container.Bind<SceneObjectService>().AsSingle().WithArguments(_camera);
             Container.BindInterfacesTo<InputService>().AsSingle().NonLazy();
+            Container.Bind<RandomService>().AsSingle();
         }
     }
 }
