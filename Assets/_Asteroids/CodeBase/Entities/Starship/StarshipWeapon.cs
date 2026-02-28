@@ -34,7 +34,7 @@ namespace _Asteroids.CodeBase.Entities.Starship
         {
             if (weapon != null && weapon.CanShoot())
             {
-                weapon.Shoot(new ShootIntent(_weaponsRoot.position, _weaponsRoot.up));
+                weapon.Shoot(new ShootIntent(_weaponsRoot.position, _weaponsRoot.up, EntityTag.Player));
             }
         }
     }

@@ -15,12 +15,14 @@ namespace _Asteroids.CodeBase.Infrastructure
         [SerializeField, Required] private Starship _starship;
 
         [SerializeField, Required] private BulletWeapon _bulletWeaponPrefab;
+        [SerializeField, Required] private Bullet _bulletPrefab;
 
         public override void InstallBindings()
         {
             Container.Bind<Starship>().FromInstance(_starship).AsSingle();
 
             Container.BindFactory<BulletWeaponSpawnPayload, BulletWeapon, BulletWeapon.Factory>().FromComponentInNewPrefab(_bulletWeaponPrefab);
+            Container.BindFactory<BulletSpawnPayload, Bullet, Bullet.Factory>().FromComponentInNewPrefab(_bulletPrefab);
 
             Container.Bind<SceneObjectService>().AsSingle().WithArguments(_camera);
             Container.Bind<RandomService>().AsSingle();

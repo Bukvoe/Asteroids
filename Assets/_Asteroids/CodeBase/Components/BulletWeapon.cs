@@ -7,14 +7,17 @@ namespace _Asteroids.CodeBase.Components
     public partial class BulletWeapon : MonoBehaviour, IWeapon
     {
         private BulletWeaponState _state;
+        private Bullet.Factory _bulletFactory;
 
         public IWeaponState State => _state;
 
         [Inject]
-        public void Construct(BulletWeaponSpawnPayload spawnPayload)
+        public void Construct(BulletWeaponSpawnPayload spawnPayload, Bullet.Factory bulletFactory)
         {
-            transform.SetParent(spawnPayload.Parent, worldPositionStays: false);
+            _bulletFactory = bulletFactory;
             _state = new BulletWeaponState(1);
+
+            transform.SetParent(spawnPayload.Parent, worldPositionStays: false);
         }
 
         public void Update()
@@ -29,10 +32,15 @@ namespace _Asteroids.CodeBase.Components
 
         public void Shoot(ShootIntent shootIntent)
         {
-            if (CanShoot())
+            if (!CanShoot())
             {
-                _state.StartCooldown();
+                return;
             }
+
+            _state.StartCooldown();
+
+            var payload = new BulletSpawnPayload(shootIntent.From, shootIntent.Direction, 5, shootIntent.EntityTag);
+            _bulletFactory.Create(payload);
         }
     }
 }
