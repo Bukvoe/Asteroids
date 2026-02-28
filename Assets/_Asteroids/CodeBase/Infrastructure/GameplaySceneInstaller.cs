@@ -1,4 +1,5 @@
-using _Asteroids.CodeBase.Entities;
+using _Asteroids.CodeBase.Entities.Starship;
+using _Asteroids.CodeBase.Services;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -12,6 +13,8 @@ namespace _Asteroids.CodeBase.Infrastructure
         public override void InstallBindings()
         {
             Container.Bind<Starship>().FromInstance(_starship).AsSingle();
+
+            Container.BindInterfacesTo<InputService>().AsSingle().NonLazy();
         }
     }
 }
