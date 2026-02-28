@@ -196,6 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14af41c218fa45fa8e2abaaf31d639ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Infrastructure.GameplaySceneInstaller
+  _camera: {fileID: 519420031}
   _starship: {fileID: 6989007487784517633}
 --- !u!1 &519420028
 GameObject:

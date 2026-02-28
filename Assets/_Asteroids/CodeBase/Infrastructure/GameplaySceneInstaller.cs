@@ -17,8 +17,9 @@ namespace _Asteroids.CodeBase.Infrastructure
             Container.Bind<Starship>().FromInstance(_starship).AsSingle();
 
             Container.Bind<SceneObjectService>().AsSingle().WithArguments(_camera);
-            Container.BindInterfacesTo<InputService>().AsSingle().NonLazy();
             Container.Bind<RandomService>().AsSingle();
+            Container.Bind<GameMapService>().AsSingle();
+            Container.BindInterfacesTo<InputService>().AsSingle().NonLazy();
         }
     }
 }

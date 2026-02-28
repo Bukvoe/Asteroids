@@ -8,5 +8,15 @@ namespace _Asteroids.CodeBase.Services
         {
             return Random.value < 0.5f;
         }
+
+        public float ApplyRandomSign(float value)
+        {
+            if (RandomBool())
+            {
+                return value * -1;
+            }
+
+            return value;
+        }
     }
 }

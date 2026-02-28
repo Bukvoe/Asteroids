@@ -1,11 +1,14 @@
 using System;
+using _Asteroids.CodeBase.Services;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace _Asteroids.CodeBase.Entities.Starship
 {
- public class StarshipMovement : MonoBehaviour
+    public class StarshipMovement : MonoBehaviour
     {
+        private const float MinTimeToMaxSpeed = 0.01f;
         public event Action<Vector2> OnPositionChanged;
         public event Action<float> OnRotationChanged;
         public event Action<float> OnSpeedChanged;
@@ -15,7 +18,7 @@ namespace _Asteroids.CodeBase.Entities.Starship
         [SerializeField, SuffixLabel("unit/sec")]
         private float _maxSpeed;
 
-        [SerializeField, SuffixLabel("sec")]
+        [SerializeField, MinValue(MinTimeToMaxSpeed), SuffixLabel("sec")]
         private float _timeToMaxSpeed;
 
         [SerializeField] private AnimationCurve _speedCurve;
@@ -26,6 +29,13 @@ namespace _Asteroids.CodeBase.Entities.Starship
         private float _thrustTime;
         private Vector2 _velocity;
         private MoveIntent _moveIntent;
+        private GameMapService _gameMapService;
+
+        [Inject]
+        private void Construct(GameMapService gameMapService)
+        {
+            _gameMapService = gameMapService;
+        }
 
         public void SetMoveIntent(MoveIntent moveIntent)
         {
@@ -65,16 +75,21 @@ namespace _Asteroids.CodeBase.Entities.Starship
 
         private void Move()
         {
-            _rigidbody.MovePosition(_rigidbody.position + _velocity * Time.fixedDeltaTime);
-            OnPositionChanged?.Invoke(transform.position);
+            const float objectRadius = 0.5f;
+            Vector3 newPosition = _rigidbody.position + _velocity * Time.fixedDeltaTime;
+            var wrappedPosition = _gameMapService.WrapPosition(newPosition, objectRadius);
+
+            _rigidbody.MovePosition(wrappedPosition);
+            OnPositionChanged?.Invoke(wrappedPosition);
         }
 
         private void Rotate()
         {
             var rotationDelta = _moveIntent.Rotation * _rotationSpeed * Time.fixedDeltaTime;
-            _rigidbody.MoveRotation(_rigidbody.rotation + rotationDelta);
+            var targetRotation = _rigidbody.rotation + rotationDelta;
 
-            OnRotationChanged?.Invoke(transform.eulerAngles.z);
+            _rigidbody.MoveRotation(targetRotation);
+            OnRotationChanged?.Invoke(targetRotation);
         }
     }
 }
