@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 185037023}
   - component: {fileID: 185037022}
+  - component: {fileID: 185037024}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -149,7 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zenject::Zenject.SceneContext
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 185037024}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -182,6 +184,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &185037024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185037021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14af41c218fa45fa8e2abaaf31d639ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Infrastructure.GameplaySceneInstaller
+  _starship: {fileID: 6989007487784517633}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,21 +413,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2542250993546120802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6989007487784517632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b0b26edbef74a33b0c7716da2845e18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.Codebase.Entities.Player
-  <Destroyable>k__BackingField: {fileID: 0}
-  <Movement>k__BackingField: {fileID: 0}
-  <Weapon>k__BackingField: {fileID: 0}
 --- !u!4 &3999659473455977908
 Transform:
   m_ObjectHideFlags: 0
@@ -497,7 +497,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3999659473455977908}
   - component: {fileID: 5127310342616369975}
-  - component: {fileID: 2542250993546120802}
+  - component: {fileID: 6989007487784517633}
   m_Layer: 0
   m_Name: Starship
   m_TagString: Untagged
@@ -505,6 +505,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6989007487784517633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6989007487784517632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45fdd66a27654ccead7c58f7263daccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Entities.Starship
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
