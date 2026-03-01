@@ -16,38 +16,18 @@ namespace _Asteroids.CodeBase.Gameplay.Ufo
         [SerializeField, Required] private Destroyable _destroyable;
         [SerializeField, Required] private UfoDamageable _damageable;
         [SerializeField, Required] private UfoCollision _collision;
-
-        [SerializeField, Required] private CircleCollider2D _circleCollider;
-
-        private Vector2 _direction;
-        private float _movementSpeed;
-        private float _size;
-        private bool _isEnteredToMap;
-
-        private float _speed;
-        private BulletWeapon _bulletWeapon;
-        [SerializeField, Required] private Rigidbody2D _rigidbody;
-
-        private Starship.Starship _starship;
-        [SerializeField] private Transform _weaponsRoot;
-
-        private GameMapService _gameMapService;
+        [SerializeField, Required] private UfoMovement _movement;
+        [SerializeField, Required] private UfoWeapon _weapon;
 
         [Inject]
-        public void Construct(UfoSpawnPayload spawnPayload, Starship.Starship starship, BulletWeapon.Factory bulletWeaponFactory, GameMapService mapBorderService)
+        public void Construct(
+            UfoSpawnPayload spawnPayload,
+            Starship.Starship starship,
+            BulletWeapon.Factory bulletWeaponFactory,
+            GameMapService mapBorderService)
         {
-            transform.position = spawnPayload.Position;
-            _movementSpeed = spawnPayload.MovementSpeed;
-            _starship = starship;
-
-            var bulletWeaponSpawnPayload = new BulletWeaponSpawnPayload(
-                parent: _weaponsRoot,
-                cooldown: spawnPayload.BulletWeaponCooldown,
-                bulletSpeed: spawnPayload.BulletSpeed);
-
-            _bulletWeapon = bulletWeaponFactory.Create(bulletWeaponSpawnPayload);
-
-            _gameMapService = mapBorderService;
+            _movement.Initialize(spawnPayload.Position, starship.transform, spawnPayload.MovementSpeed, mapBorderService);
+            _weapon.Initialize(bulletWeaponFactory, spawnPayload.BulletWeaponCooldown, spawnPayload.BulletSpeed, starship.transform);
         }
 
         private void Start()
@@ -62,50 +42,6 @@ namespace _Asteroids.CodeBase.Gameplay.Ufo
             _collision.CollisionDetected -= _destroyable.DestroySelf;
             _damageable.OnDamaged -= _destroyable.DestroySelf;
             _destroyable.OnDestroyed -= NotifyDestroyed;
-        }
-
-        private void FixedUpdate()
-        {
-            MoveToPlayer();
-
-            var newPosition = transform.position + (Vector3)(_direction * (_movementSpeed * Time.fixedDeltaTime));
-
-            if (!_isEnteredToMap)
-            {
-                if (_gameMapService.IsInsideMap(newPosition, _circleCollider.radius))
-                {
-                    _isEnteredToMap = true;
-                }
-            }
-
-            if (_isEnteredToMap)
-            {
-                newPosition = _gameMapService.WrapPosition(newPosition, _circleCollider.radius);
-            }
-
-            _rigidbody.MovePosition(newPosition);
-
-            if (_starship != null && _bulletWeapon.CanShoot())
-            {
-                _bulletWeapon.Shoot(new ShootIntent(transform.position, _direction, EntityTag.Enemy));
-            }
-        }
-
-        private void MoveToPlayer()
-        {
-            if (_starship == null)
-            {
-                _direction = Vector2.zero;
-                return;
-            }
-
-            _direction = (_starship.transform.position - transform.position).normalized;
-        }
-
-
-        public void TakeDamage()
-        {
-            _destroyable.DestroySelf();
         }
 
         private void NotifyDestroyed()

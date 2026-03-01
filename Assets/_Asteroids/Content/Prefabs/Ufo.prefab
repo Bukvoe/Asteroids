@@ -47,6 +47,8 @@ GameObject:
   - component: {fileID: 4904394607680861558}
   - component: {fileID: 4190214868321421710}
   - component: {fileID: 7901630540171944154}
+  - component: {fileID: -7072020733873888069}
+  - component: {fileID: -2783290020676773236}
   m_Layer: 0
   m_Name: Ufo
   m_TagString: Untagged
@@ -207,9 +209,8 @@ MonoBehaviour:
   _destroyable: {fileID: 4904394607680861558}
   _damageable: {fileID: 4190214868321421710}
   _collision: {fileID: 7901630540171944154}
-  _circleCollider: {fileID: 2341700367801802323}
-  _rigidbody: {fileID: 192616081775829781}
-  _weaponsRoot: {fileID: 4514968344448029110}
+  _movement: {fileID: -7072020733873888069}
+  _weapon: {fileID: -2783290020676773236}
 --- !u!114 &4904394607680861558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,3 +249,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Gameplay.Ufo.UfoCollision
   _collider: {fileID: 2341700367801802323}
   _rigidbody: {fileID: 192616081775829781}
+--- !u!114 &-7072020733873888069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3666771091437586413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de847269c220431897043c291183ce19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Gameplay.Ufo.UfoMovement
+  _rigidbody: {fileID: 192616081775829781}
+  _collider: {fileID: 2341700367801802323}
+--- !u!114 &-2783290020676773236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3666771091437586413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f14f228b2144ab5a4ab64eea8bfe04e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Gameplay.Ufo.UfoWeapon
+  _weaponsRoot: {fileID: 4514968344448029110}

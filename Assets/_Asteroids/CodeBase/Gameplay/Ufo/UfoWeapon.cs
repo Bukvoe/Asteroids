@@ -1,0 +1,39 @@
+using _Asteroids.CodeBase.Factories.Payloads;
+using _Asteroids.CodeBase.Gameplay.Common;
+using _Asteroids.CodeBase.Gameplay.Weapons;
+using Sirenix.OdinInspector;
+using UnityEngine;
+
+namespace _Asteroids.CodeBase.Gameplay.Ufo
+{
+    public class UfoWeapon : MonoBehaviour
+    {
+        [SerializeField, Required] private Transform _weaponsRoot;
+
+        private BulletWeapon _bulletWeapon;
+        private Transform _target;
+
+        public void Initialize(BulletWeapon.Factory factory, float cooldown, float bulletSpeed, Transform target)
+        {
+            var bulletWeaponSpawnPayload = new BulletWeaponSpawnPayload(
+                parent: _weaponsRoot,
+                cooldown: cooldown,
+                bulletSpeed: bulletSpeed);
+
+            _bulletWeapon = factory.Create(bulletWeaponSpawnPayload);
+
+            _target = target;
+        }
+
+        private void FixedUpdate()
+        {
+            if (_target == null || !_bulletWeapon.CanShoot())
+            {
+                return;
+            }
+
+            Vector2 direction = (_target.position - transform.position).normalized;
+            _bulletWeapon.Shoot(new ShootIntent(transform.position, direction, EntityTag.Enemy));
+        }
+    }
+}
