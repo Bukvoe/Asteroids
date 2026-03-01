@@ -16,7 +16,7 @@ namespace _Asteroids.CodeBase.Infrastructure
         [SerializeField, Required] private Camera _camera;
         [SerializeField, Required] private GameConfig _gameConfig;
 
-        [SerializeField, Required] private Starship _starship;
+        [SerializeField, Required] private Starship _starshipPrefab;
 
         [SerializeField, Required] private BulletWeapon _bulletWeaponPrefab;
         [SerializeField, Required] private Bullet _bulletPrefab;
@@ -28,8 +28,6 @@ namespace _Asteroids.CodeBase.Infrastructure
 
         public override void InstallBindings()
         {
-            Container.Bind<Starship>().FromInstance(_starship).AsSingle();
-
             Container.BindFactory<BulletWeaponSpawnPayload, BulletWeapon, BulletWeapon.Factory>().FromComponentInNewPrefab(_bulletWeaponPrefab);
             Container.BindFactory<BulletSpawnPayload, Bullet, Bullet.Factory>().FromComponentInNewPrefab(_bulletPrefab);
             Container.BindFactory<AsteroidSpawnPayload, Asteroid, Asteroid.Factory>().FromComponentInNewPrefab(_asteroidPrefab);
@@ -40,12 +38,15 @@ namespace _Asteroids.CodeBase.Infrastructure
             Container.Bind<GameMapService>().AsSingle();
             Container.BindInterfacesAndSelfTo<AsteroidService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<GameSessionService>().AsSingle().NonLazy();
+
+            Container.Bind<Starship>().FromComponentInNewPrefab(_starshipPrefab).AsSingle();
             Container.BindInterfacesTo<InputService>().AsSingle().NonLazy();
 
             Container.Bind<HudView>().FromInstance(_hudView).AsSingle();
             Container.BindInterfacesAndSelfTo<HudPresenter>().AsSingle();
             Container.Bind<LoseView>().FromInstance(_loseView).AsSingle();
             Container.BindInterfacesAndSelfTo<LosePresenter>().AsSingle();
+
         }
     }
 }

@@ -15,6 +15,7 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
         public BulletWeaponState(float cooldown)
         {
             _cooldown = cooldown;
+            CurrentCooldown = 0f;
         }
 
         public void StartCooldown()
@@ -30,15 +31,13 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
                 return;
             }
 
-            CurrentCooldown -= ICooldownState.CooldownUpdateInterval;
+            CurrentCooldown -= deltaTime;
 
-            if (CurrentCooldown > 0f)
+            if (CurrentCooldown < 0f)
             {
-                Changed?.Invoke();
-                return;
+                CurrentCooldown = 0f;
             }
 
-            CurrentCooldown = 0f;
             Changed?.Invoke();
         }
     }

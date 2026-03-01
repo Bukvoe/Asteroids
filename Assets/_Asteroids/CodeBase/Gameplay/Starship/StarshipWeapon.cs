@@ -1,6 +1,7 @@
 using _Asteroids.CodeBase.Factories.Payloads;
 using _Asteroids.CodeBase.Gameplay.Common;
 using _Asteroids.CodeBase.Gameplay.Weapons;
+using _Asteroids.CodeBase.Services;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -15,10 +16,17 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
         public IWeapon Secondary { get; private set; }
 
         [Inject]
-        public void Construct(BulletWeapon.Factory bulletWeaponFactory)
+        private void Construct(GameConfigService gameConfigService, BulletWeapon.Factory bulletWeaponFactory)
         {
-            Primary = bulletWeaponFactory.Create(new BulletWeaponSpawnPayload(_weaponsRoot));
-            Secondary = bulletWeaponFactory.Create(new BulletWeaponSpawnPayload(_weaponsRoot));
+            var starshipConfig = gameConfigService.GetStarshipConfig();
+
+            var bulletWeaponSpawnPayload = new BulletWeaponSpawnPayload(
+                parent: _weaponsRoot,
+                cooldown: starshipConfig.BulletWeaponCooldown,
+                bulletSpeed: starshipConfig.BulletSpeed);
+
+            Primary = bulletWeaponFactory.Create(bulletWeaponSpawnPayload);
+            Secondary = bulletWeaponFactory.Create(bulletWeaponSpawnPayload);
         }
 
         public void ShootPrimary()

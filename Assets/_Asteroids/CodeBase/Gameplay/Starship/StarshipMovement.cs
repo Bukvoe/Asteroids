@@ -32,9 +32,16 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
         private GameMapService _gameMapService;
 
         [Inject]
-        private void Construct(GameMapService gameMapService)
+        private void Construct(GameConfigService gameConfigService, GameMapService gameMapService)
         {
+            var starshipConfig = gameConfigService.GetStarshipConfig();
+
             _gameMapService = gameMapService;
+
+            _maxSpeed = starshipConfig.MaxSpeed;
+            _timeToMaxSpeed = starshipConfig.TimeToMaxSpeed;
+            _speedCurve = starshipConfig.SpeedCurve;
+            _rotationSpeed = starshipConfig.RotationSpeed;
         }
 
         public void SetMoveIntent(MoveIntent moveIntent)

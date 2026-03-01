@@ -8,14 +8,16 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
     {
         private BulletWeaponState _state;
         private Bullet.Factory _bulletFactory;
+        private float _bulletSpeed;
 
         public IWeaponState State => _state;
 
         [Inject]
         public void Construct(BulletWeaponSpawnPayload spawnPayload, Bullet.Factory bulletFactory)
         {
+            _state = new BulletWeaponState(spawnPayload.Cooldown);
             _bulletFactory = bulletFactory;
-            _state = new BulletWeaponState(1);
+            _bulletSpeed = spawnPayload.BulletSpeed;
 
             transform.SetParent(spawnPayload.Parent, worldPositionStays: false);
         }
@@ -39,7 +41,7 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
 
             _state.StartCooldown();
 
-            var payload = new BulletSpawnPayload(shootIntent.From, shootIntent.Direction, 5, shootIntent.EntityTag);
+            var payload = new BulletSpawnPayload(shootIntent.From, shootIntent.Direction, _bulletSpeed, shootIntent.EntityTag);
             _bulletFactory.Create(payload);
         }
     }
