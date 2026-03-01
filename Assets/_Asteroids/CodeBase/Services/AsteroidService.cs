@@ -43,7 +43,7 @@ namespace _Asteroids.CodeBase.Services
 
         public void Tick()
         {
-            _spawnCooldown -= Time.deltaTime;
+            _spawnCooldown = Mathf.Max(_spawnCooldown - Time.deltaTime, 0);
 
             if (_spawnCooldown <= 0f && CountAsteroidsBySize(_asteroidToSpawn) < _maxAsteroids)
             {
