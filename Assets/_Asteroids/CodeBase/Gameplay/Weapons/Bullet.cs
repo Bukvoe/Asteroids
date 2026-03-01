@@ -35,8 +35,13 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
             _rigidbody.MovePosition(transform.position + _velocity * Time.fixedDeltaTime);
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D other)
         {
+            if (other.TryGetComponent(out IDamageable damageable) && damageable.CanBeDamagedBy(this))
+            {
+                damageable.TakeDamage();
+                Destroy(gameObject);
+            }
         }
     }
 }

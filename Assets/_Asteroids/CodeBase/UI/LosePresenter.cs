@@ -17,6 +17,8 @@ namespace _Asteroids.CodeBase.UI
 
         public void Initialize()
         {
+            _starship.OnDestroyed += OnStarshipDestroyed;
+
             _view.Hide();
         }
 
@@ -24,7 +26,13 @@ namespace _Asteroids.CodeBase.UI
         {
             if (_starship != null)
             {
+                _starship.OnDestroyed -= OnStarshipDestroyed;
             }
+        }
+
+        private void OnStarshipDestroyed()
+        {
+            _view.Show();
         }
     }
 }

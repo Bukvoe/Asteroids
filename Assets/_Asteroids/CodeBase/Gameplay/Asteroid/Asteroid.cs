@@ -13,6 +13,7 @@ namespace _Asteroids.CodeBase.Gameplay.Asteroid
         public event Action<Asteroid> OnDestroyed;
 
         [SerializeField, Required] private Destroyable _destroyable;
+        [SerializeField, Required] private AsteroidDamageable _damageable;
 
         [SerializeField, Required] private SpriteRenderer _spriteRenderer;
         [SerializeField, Required] private CircleCollider2D _circleCollider;
@@ -42,11 +43,13 @@ namespace _Asteroids.CodeBase.Gameplay.Asteroid
         private void Start()
         {
             _destroyable.OnDestroyed += NotifyDestroyed;
+            _damageable.OnDamaged += _destroyable.DestroySelf;
         }
 
         private void OnDestroy()
         {
             _destroyable.OnDestroyed -= NotifyDestroyed;
+            _damageable.OnDamaged -= _destroyable.DestroySelf;
         }
 
         private void FixedUpdate()
@@ -56,10 +59,6 @@ namespace _Asteroids.CodeBase.Gameplay.Asteroid
 
             _rigidbody.MovePosition(wrappedPosition);
             _rigidbody.MoveRotation(transform.rotation.eulerAngles.z + _rotationSpeed * Time.fixedDeltaTime);
-        }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
         }
 
         private void NotifyDestroyed()

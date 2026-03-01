@@ -2164,8 +2164,11 @@ GameObject:
   - component: {fileID: 6989007487784517636}
   - component: {fileID: 6989007487784517635}
   - component: {fileID: 6989007487784517633}
+  - component: {fileID: 6989007487784517639}
+  - component: {fileID: 6989007487784517638}
   - component: {fileID: 6989007487784517634}
   - component: {fileID: 6989007487784517637}
+  - component: {fileID: 6989007487784517640}
   m_Layer: 0
   m_Name: Starship
   m_TagString: Untagged
@@ -2185,6 +2188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45fdd66a27654ccead7c58f7263daccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Entities.Starship
+  _destroyable: {fileID: 6989007487784517639}
+  _collision: {fileID: 6989007487784517638}
+  _damageable: {fileID: 6989007487784517640}
   <Movement>k__BackingField: {fileID: 6989007487784517634}
   <Weapon>k__BackingField: {fileID: 6989007487784517637}
 --- !u!114 &6989007487784517634
@@ -2303,6 +2309,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Entities.Starship.StarshipWeapon
   _weaponsRoot: {fileID: 1377157782}
+--- !u!114 &6989007487784517638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6989007487784517632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab90e4d4af9745f7afe2483df0fd732c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Gameplay.Starship.StarshipCollision
+  _collider: {fileID: 6989007487784517636}
+  _rigidbody: {fileID: 6989007487784517635}
+--- !u!114 &6989007487784517639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6989007487784517632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c8387837b3418f8e0e50128a08dc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Gameplay.Common.Destroyable
+--- !u!114 &6989007487784517640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6989007487784517632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb44ea3460ba4264b9dda24eb6b1bc37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Gameplay.Starship.StarshipDamageable
 --- !u!114 &7135893743191560921
 MonoBehaviour:
   m_ObjectHideFlags: 0
