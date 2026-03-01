@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Asteroids.CodeBase.Configs
 {
     [Serializable]
     public class StarshipConfig
     {
-        public float Size;
+        public float Radius;
 
         public float MaxSpeed;
         public float TimeToMaxSpeed;

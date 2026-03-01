@@ -18,7 +18,7 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
         {
             var starshipConfig = gameConfigService.StarshipConfig;
 
-            _collider.radius = starshipConfig.Size;
+            _collider.radius = starshipConfig.Radius;
         }
 
         public void OnTriggerEnter2D(Collider2D other)

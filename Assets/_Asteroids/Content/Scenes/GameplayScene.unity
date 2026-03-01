@@ -1100,7 +1100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Configs.GameConfig
   <Starship>k__BackingField:
-    Size: 0.3
+    Radius: 0.3
     MaxSpeed: 3.5
     TimeToMaxSpeed: 2
     SpeedCurve:
@@ -1156,6 +1156,11 @@ MonoBehaviour:
     Sprite: {fileID: -6613794951689082208, guid: 42478693aabd52847ac78dca5cb3a458, type: 3}
     NextSize: 0
     Fragments: 0
+  <Score>k__BackingField:
+    SmallAsteroidScore: 30
+    MediumAsteroidScore: 20
+    LargeAsteroidScore: 10
+    UfoScore: 25
 --- !u!1 &1030361723
 GameObject:
   m_ObjectHideFlags: 0

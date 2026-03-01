@@ -27,6 +27,7 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
         private float _rotationSpeed;
 
         private float _thrustTime;
+        private float _radius;
         private Vector2 _velocity;
         private MoveIntent _moveIntent;
         private GameMapService _gameMapService;
@@ -42,6 +43,8 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
             _timeToMaxSpeed = starshipConfig.TimeToMaxSpeed;
             _speedCurve = starshipConfig.SpeedCurve;
             _rotationSpeed = starshipConfig.RotationSpeed;
+
+            _radius = starshipConfig.Radius;
         }
 
         public void SetMoveIntent(MoveIntent moveIntent)
@@ -82,9 +85,8 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
 
         private void Move()
         {
-            const float objectRadius = 0.5f;
             Vector3 newPosition = _rigidbody.position + _velocity * Time.fixedDeltaTime;
-            var wrappedPosition = _gameMapService.WrapPosition(newPosition, objectRadius);
+            var wrappedPosition = _gameMapService.WrapPosition(newPosition, _radius);
 
             _rigidbody.MovePosition(wrappedPosition);
             OnPositionChanged?.Invoke(wrappedPosition);

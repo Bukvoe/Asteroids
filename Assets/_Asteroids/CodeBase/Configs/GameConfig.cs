@@ -9,5 +9,7 @@ namespace _Asteroids.CodeBase.Configs
 
         [field: SerializeField] public AsteroidSpawnConfig AsteroidSpawn { get; private set; }
         [field: SerializeField] public List<AsteroidConfig> Asteroids { get; private set; }
+
+        [field: SerializeField] public ScoreConfig Score { get; private set; }
     }
 }
