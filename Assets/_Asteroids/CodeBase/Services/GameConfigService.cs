@@ -7,18 +7,17 @@ namespace _Asteroids.CodeBase.Services
 {
     public class GameConfigService
     {
-        private readonly StarshipConfig _starshipConfig;
         private readonly Dictionary<AsteroidSize, AsteroidConfig> _asteroidConfigs;
+
+        public StarshipConfig StarshipConfig { get; private set; }
+        public AsteroidSpawnConfig AsteroidSpawnConfig { get; private set; }
 
         public GameConfigService(GameConfig gameConfig)
         {
-            _starshipConfig = gameConfig.Starship;
-            _asteroidConfigs = gameConfig.Asteroids.ToDictionary(c => c.Size);
-        }
+            StarshipConfig = gameConfig.Starship;
 
-        public StarshipConfig GetStarshipConfig()
-        {
-            return _starshipConfig;
+            AsteroidSpawnConfig = gameConfig.AsteroidSpawn;
+            _asteroidConfigs = gameConfig.Asteroids.ToDictionary(c => c.Size);
         }
 
         public AsteroidConfig GetAsteroidConfigBySize(AsteroidSize size)

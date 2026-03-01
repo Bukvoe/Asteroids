@@ -18,7 +18,7 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
         [Inject]
         private void Construct(GameConfigService gameConfigService, BulletWeapon.Factory bulletWeaponFactory)
         {
-            var starshipConfig = gameConfigService.GetStarshipConfig();
+            var starshipConfig = gameConfigService.StarshipConfig;
 
             var bulletWeaponSpawnPayload = new BulletWeaponSpawnPayload(
                 parent: _weaponsRoot,

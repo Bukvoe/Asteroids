@@ -34,7 +34,7 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
         [Inject]
         private void Construct(GameConfigService gameConfigService, GameMapService gameMapService)
         {
-            var starshipConfig = gameConfigService.GetStarshipConfig();
+            var starshipConfig = gameConfigService.StarshipConfig;
 
             _gameMapService = gameMapService;
 

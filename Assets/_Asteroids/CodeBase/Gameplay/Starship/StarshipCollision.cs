@@ -16,7 +16,7 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
         [Inject]
         private void Construct(GameConfigService gameConfigService)
         {
-            var starshipConfig = gameConfigService.GetStarshipConfig();
+            var starshipConfig = gameConfigService.StarshipConfig;
 
             _collider.radius = starshipConfig.Size;
         }

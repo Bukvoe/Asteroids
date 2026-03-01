@@ -1101,7 +1101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Configs.GameConfig
   <Starship>k__BackingField:
     Size: 0.3
-    MaxSpeed: 5
+    MaxSpeed: 3.5
     TimeToMaxSpeed: 2
     SpeedCurve:
       serializedVersion: 2
@@ -1129,7 +1129,11 @@ MonoBehaviour:
       m_RotationOrder: 4
     RotationSpeed: 200
     BulletWeaponCooldown: 0.5
-    BulletSpeed: 4
+    BulletSpeed: 6
+  <AsteroidSpawn>k__BackingField:
+    AsteroidToSpawn: 3
+    MaxAsteroids: 6
+    SpawnCooldown: 4
   <Asteroids>k__BackingField:
   - Size: 3
     MoveSpeed: 1.5

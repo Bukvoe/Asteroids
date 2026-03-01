@@ -17,7 +17,8 @@ namespace _Asteroids.CodeBase.Services
         private readonly RandomService _randomService;
 
         private readonly List<Asteroid> _spawnedAsteroids = new();
-        private readonly int _maxLargeAsteroids;
+        private readonly AsteroidSize _asteroidToSpawn;
+        private readonly int _maxAsteroids;
         private readonly float _maxSpawnCooldown;
 
         private float _spawnCooldown;
@@ -33,17 +34,20 @@ namespace _Asteroids.CodeBase.Services
             _gameConfigService = gameConfigService;
             _randomService = randomService;
 
-            _maxLargeAsteroids = 5;
-            _maxSpawnCooldown = 5;
+            var asteroidSpawnConfig = gameConfigService.AsteroidSpawnConfig;
+
+            _asteroidToSpawn = asteroidSpawnConfig.AsteroidToSpawn;
+            _maxAsteroids = asteroidSpawnConfig.MaxAsteroids;
+            _maxSpawnCooldown = asteroidSpawnConfig.SpawnCooldown;
         }
 
         public void Tick()
         {
             _spawnCooldown -= Time.deltaTime;
 
-            if (_spawnCooldown <= 0f && CountAsteroidsBySize(AsteroidSize.Large) < _maxLargeAsteroids)
+            if (_spawnCooldown <= 0f && CountAsteroidsBySize(_asteroidToSpawn) < _maxAsteroids)
             {
-                SpawnAsteroid(AsteroidSize.Large, _gameMapService.GetSpawnRandomPoint());
+                SpawnAsteroid(_asteroidToSpawn, _gameMapService.GetSpawnRandomPoint());
                 _spawnCooldown += _maxSpawnCooldown;
             }
         }
