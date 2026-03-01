@@ -32,7 +32,7 @@ namespace _Asteroids.CodeBase.Gameplay.Ufo
 
             _direction = (_target.position - transform.position).normalized;
 
-            var newPosition = (Vector2)transform.position + _direction * _speed * Time.fixedDeltaTime;
+            var newPosition = (Vector2)transform.position + _direction * (_speed * Time.fixedDeltaTime);
 
             if (!_isEnteredToMap && _mapService.IsInsideMap(newPosition, _collider.radius))
             {

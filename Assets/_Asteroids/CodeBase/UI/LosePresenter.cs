@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using _Asteroids.CodeBase.Gameplay.Starship;
 using _Asteroids.CodeBase.Services;
 using Zenject;

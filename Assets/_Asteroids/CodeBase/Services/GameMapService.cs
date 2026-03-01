@@ -39,14 +39,13 @@ namespace _Asteroids.CodeBase.Services
             const float offset = 2f;
 
             var isVertical = _randomService.RandomBool();
-            var isNegative = _randomService.RandomBool();
 
             var x = isVertical
                 ? Random.Range(-Width, Width)
-                : isNegative ? -Width - offset : Width + offset;
+                : _randomService.RandomBool() ? -Width - offset : Width + offset;
 
             var y = isVertical
-                ? isNegative ? -Height - offset : Height + offset
+                ? _randomService.RandomBool() ? -Height - offset : Height + offset
                 : Random.Range(-Height, Height);
 
             return new Vector2(x, y);

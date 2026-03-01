@@ -64,8 +64,8 @@ namespace _Asteroids.CodeBase.Services
 
         public void Dispose()
         {
-            _playerInput?.Starship.Disable();
             _playerInput?.Disable();
+            _playerInput?.Dispose();
         }
     }
 }
