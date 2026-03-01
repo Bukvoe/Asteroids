@@ -14,33 +14,27 @@ namespace _Asteroids.CodeBase.Gameplay.Asteroid
 
         [SerializeField, Required] private Destroyable _destroyable;
         [SerializeField, Required] private AsteroidDamageable _damageable;
-
+        [SerializeField, Required] private AsteroidMovement _movement;
         [SerializeField, Required] private SpriteRenderer _spriteRenderer;
         [SerializeField, Required] private CircleCollider2D _circleCollider;
-
-        [SerializeField, Required] private Rigidbody2D _rigidbody;
-
-        private float _rotationSpeed;
-        private Vector3 _velocity;
-        private GameMapService _gameMapService;
-        private bool _isEnteredToMap;
 
         public AsteroidSize Size { get; private set; }
 
         [Inject]
         public void Construct(AsteroidSpawnPayload spawnPayload, GameMapService gameMapService)
         {
-            _gameMapService = gameMapService;
-
-            transform.position = spawnPayload.Position;
-            transform.rotation = Quaternion.Euler(0, 0, spawnPayload.Rotation);
-
-            _velocity = spawnPayload.MoveDirection * spawnPayload.MoveSpeed;
-            _rotationSpeed = spawnPayload.RotationSpeed;
             _spriteRenderer.sprite = spawnPayload.Sprite;
             _circleCollider.radius = spawnPayload.Radius;
 
             Size = spawnPayload.Size;
+
+            _movement.Initialize(
+                spawnPayload.Position,
+                spawnPayload.Rotation,
+                spawnPayload.MoveDirection,
+                spawnPayload.MoveSpeed,
+                spawnPayload.RotationSpeed,
+                gameMapService);
         }
 
         private void Start()
@@ -53,27 +47,6 @@ namespace _Asteroids.CodeBase.Gameplay.Asteroid
         {
             _destroyable.OnDestroyed -= NotifyDestroyed;
             _damageable.OnDamaged -= _destroyable.DestroySelf;
-        }
-
-        private void FixedUpdate()
-        {
-            var newPosition = transform.position + _velocity * Time.fixedDeltaTime;
-
-            if (!_isEnteredToMap)
-            {
-                if (_gameMapService.IsInsideMap(newPosition, _circleCollider.radius))
-                {
-                    _isEnteredToMap = true;
-                }
-            }
-
-            if (_isEnteredToMap)
-            {
-                newPosition = _gameMapService.WrapPosition(newPosition, _circleCollider.radius);
-            }
-
-            _rigidbody.MovePosition(newPosition);
-            _rigidbody.MoveRotation(transform.rotation.eulerAngles.z + _rotationSpeed * Time.fixedDeltaTime);
         }
 
         private void NotifyDestroyed()

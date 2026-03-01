@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6211795482549401146}
   - component: {fileID: -6319190627611939167}
   - component: {fileID: 1720726599442891051}
+  - component: {fileID: -5849814250640398066}
   m_Layer: 0
   m_Name: Asteroid
   m_TagString: Untagged
@@ -173,9 +174,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Entities.Asteroid.Asteroid
   _destroyable: {fileID: -6319190627611939167}
   _damageable: {fileID: 1720726599442891051}
+  _movement: {fileID: -5849814250640398066}
   _spriteRenderer: {fileID: 6036569690786936425}
   _circleCollider: {fileID: 778245872564932785}
-  _rigidbody: {fileID: 3157726400921308228}
 --- !u!114 &-6319190627611939167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,3 +201,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfa025caa7a44a52bb63c9798900c406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Gameplay.Asteroid.AsteroidDamageable
+--- !u!114 &-5849814250640398066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6346230154786675333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdb00a905c984431988a7b1ab6121df4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Gameplay.Asteroid.AsteroidMovement
+  _circleCollider: {fileID: 778245872564932785}
+  _rigidbody: {fileID: 3157726400921308228}
