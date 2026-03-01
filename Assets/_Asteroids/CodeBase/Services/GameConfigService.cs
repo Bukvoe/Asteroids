@@ -11,6 +11,8 @@ namespace _Asteroids.CodeBase.Services
 
         public StarshipConfig StarshipConfig { get; private set; }
         public AsteroidSpawnConfig AsteroidSpawnConfig { get; private set; }
+        public EnemySpawnConfig EnemySpawnConfig { get; private set; }
+        public UfoConfig UfoConfig { get; private set; }
         public ScoreConfig ScoreConfig { get; private set; }
 
         public GameConfigService(GameConfig gameConfig)
@@ -19,6 +21,10 @@ namespace _Asteroids.CodeBase.Services
 
             AsteroidSpawnConfig = gameConfig.AsteroidSpawn;
             _asteroidConfigs = gameConfig.Asteroids.ToDictionary(c => c.Size);
+
+            EnemySpawnConfig = gameConfig.EnemySpawn;
+            UfoConfig = gameConfig.Ufo;
+
             ScoreConfig = gameConfig.Score;
         }
 

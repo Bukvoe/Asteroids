@@ -1,5 +1,6 @@
 ﻿using System;
 using _Asteroids.CodeBase.Gameplay.Starship;
+using _Asteroids.CodeBase.Services;
 using Zenject;
 
 namespace _Asteroids.CodeBase.UI
@@ -8,11 +9,13 @@ namespace _Asteroids.CodeBase.UI
     {
         private readonly LoseView _view;
         private readonly Starship _starship;
+        private readonly GameSessionService _gameSessionService;
 
-        public LosePresenter(LoseView view, Starship starship)
+        public LosePresenter(LoseView view, Starship starship, GameSessionService gameSessionService)
         {
             _view = view;
             _starship = starship;
+            _gameSessionService = gameSessionService;
         }
 
         public void Initialize()
@@ -32,6 +35,7 @@ namespace _Asteroids.CodeBase.UI
 
         private void OnStarshipDestroyed()
         {
+            _view.UpdateScore(_gameSessionService.Score);
             _view.Show();
         }
     }

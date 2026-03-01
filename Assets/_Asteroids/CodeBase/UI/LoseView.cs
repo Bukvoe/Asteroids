@@ -1,4 +1,5 @@
 ﻿using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ namespace _Asteroids.CodeBase.UI
 {
     public class LoseView : MonoBehaviour
     {
+        [SerializeField, Required] private TextMeshProUGUI _scoreLabel;
         [SerializeField, Required] private Button _restartButton;
 
         private void Start()
@@ -27,6 +29,11 @@ namespace _Asteroids.CodeBase.UI
         public void Hide()
         {
             gameObject.SetActive(false);
+        }
+
+        public void UpdateScore(int score)
+        {
+            _scoreLabel.text = score.ToString();
         }
 
         private void RestartScene()

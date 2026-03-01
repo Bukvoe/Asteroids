@@ -43,7 +43,7 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
             Vector2 start = transform.position;
             var end = start + (Vector2)transform.up * _distance;
 
-            var size = Physics2D.Raycast(start, transform.up, _contactFilter, _hits);
+            var size = Physics2D.Raycast(start, transform.up, _contactFilter, _hits, _distance);
 
             if (size > 0)
             {

@@ -2,6 +2,7 @@ using _Asteroids.CodeBase.Configs;
 using _Asteroids.CodeBase.Factories.Payloads;
 using _Asteroids.CodeBase.Gameplay.Asteroid;
 using _Asteroids.CodeBase.Gameplay.Starship;
+using _Asteroids.CodeBase.Gameplay.Ufo;
 using _Asteroids.CodeBase.Gameplay.Weapons;
 using _Asteroids.CodeBase.Services;
 using _Asteroids.CodeBase.UI;
@@ -25,6 +26,7 @@ namespace _Asteroids.CodeBase.Infrastructure
         [SerializeField, Required] private Laser _laserPrefab;
 
         [SerializeField, Required] private Asteroid _asteroidPrefab;
+        [SerializeField, Required] private Ufo _ufoPrefab;
 
         [SerializeField, Required] private HudView _hudView;
         [SerializeField, Required] private LoseView _loseView;
@@ -36,12 +38,14 @@ namespace _Asteroids.CodeBase.Infrastructure
             Container.BindFactory<LaserWeaponSpawnPayload, LaserWeapon, LaserWeapon.Factory>().FromComponentInNewPrefab(_laserWeaponPrefab);
             Container.BindFactory<LaserSpawnPayload, Laser, Laser.Factory>().FromComponentInNewPrefab(_laserPrefab);
             Container.BindFactory<AsteroidSpawnPayload, Asteroid, Asteroid.Factory>().FromComponentInNewPrefab(_asteroidPrefab);
+            Container.BindFactory<UfoSpawnPayload, Ufo, Ufo.Factory>().FromComponentInNewPrefab(_ufoPrefab);
 
             Container.Bind<GameConfigService>().AsSingle().WithArguments(_gameConfig);
             Container.Bind<SceneObjectService>().AsSingle().WithArguments(_camera);
             Container.Bind<RandomService>().AsTransient();
             Container.Bind<GameMapService>().AsSingle();
             Container.BindInterfacesAndSelfTo<AsteroidService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<EnemyService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<GameSessionService>().AsSingle().NonLazy();
 
             Container.Bind<Starship>().FromComponentInNewPrefab(_starshipPrefab).AsSingle();
