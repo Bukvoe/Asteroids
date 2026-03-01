@@ -22,6 +22,7 @@ namespace _Asteroids.CodeBase.Gameplay.Ufo
         private Vector2 _direction;
         private float _movementSpeed;
         private float _size;
+        private bool _isEnteredToMap;
 
         private float _speed;
         private BulletWeapon _bulletWeapon;
@@ -66,10 +67,23 @@ namespace _Asteroids.CodeBase.Gameplay.Ufo
         private void FixedUpdate()
         {
             MoveToPlayer();
-            var newPosition = transform.position + (Vector3)(_direction * (_movementSpeed * Time.fixedDeltaTime));
-            var wrappedPosition = _gameMapService.WrapPosition(newPosition, _circleCollider.radius);
 
-            _rigidbody.MovePosition(wrappedPosition);
+            var newPosition = transform.position + (Vector3)(_direction * (_movementSpeed * Time.fixedDeltaTime));
+
+            if (!_isEnteredToMap)
+            {
+                if (_gameMapService.IsInsideMap(newPosition, _circleCollider.radius))
+                {
+                    _isEnteredToMap = true;
+                }
+            }
+
+            if (_isEnteredToMap)
+            {
+                newPosition = _gameMapService.WrapPosition(newPosition, _circleCollider.radius);
+            }
+
+            _rigidbody.MovePosition(newPosition);
 
             if (_starship != null && _bulletWeapon.CanShoot())
             {

@@ -23,7 +23,7 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
 
         public void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.TryGetComponent(out Asteroid.Asteroid asteroid))
+            if (other.TryGetComponent(out Asteroid.Asteroid _) || other.TryGetComponent(out Ufo.Ufo _))
             {
                 CollisionDetected?.Invoke();
             }

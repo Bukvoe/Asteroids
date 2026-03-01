@@ -52,6 +52,14 @@ namespace _Asteroids.CodeBase.Services
             return new Vector2(x, y);
         }
 
+        public bool IsInsideMap(Vector3 position, float objectRadius)
+        {
+            return position.x >= -Width + objectRadius &&
+                   position.x <= Width - objectRadius &&
+                   position.y >= -Height + objectRadius &&
+                   position.y <= Height - objectRadius;
+        }
+
         private float WrapAxis(float value, float boundary, float offset)
         {
             if (Mathf.Abs(value) > boundary + offset)

@@ -23,6 +23,7 @@ namespace _Asteroids.CodeBase.Gameplay.Asteroid
         private float _rotationSpeed;
         private Vector3 _velocity;
         private GameMapService _gameMapService;
+        private bool _isEnteredToMap;
 
         public AsteroidSize Size { get; private set; }
 
@@ -57,9 +58,21 @@ namespace _Asteroids.CodeBase.Gameplay.Asteroid
         private void FixedUpdate()
         {
             var newPosition = transform.position + _velocity * Time.fixedDeltaTime;
-            var wrappedPosition = _gameMapService.WrapPosition(newPosition, _circleCollider.radius);
 
-            _rigidbody.MovePosition(wrappedPosition);
+            if (!_isEnteredToMap)
+            {
+                if (_gameMapService.IsInsideMap(newPosition, _circleCollider.radius))
+                {
+                    _isEnteredToMap = true;
+                }
+            }
+
+            if (_isEnteredToMap)
+            {
+                newPosition = _gameMapService.WrapPosition(newPosition, _circleCollider.radius);
+            }
+
+            _rigidbody.MovePosition(newPosition);
             _rigidbody.MoveRotation(transform.rotation.eulerAngles.z + _rotationSpeed * Time.fixedDeltaTime);
         }
 
