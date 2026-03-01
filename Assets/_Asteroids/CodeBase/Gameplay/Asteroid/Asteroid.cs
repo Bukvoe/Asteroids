@@ -20,10 +20,11 @@ namespace _Asteroids.CodeBase.Gameplay.Asteroid
 
         [SerializeField, Required] private Rigidbody2D _rigidbody;
 
-        private GameMapService _gameMapService;
-        private Vector3 _velocity;
         private float _rotationSpeed;
-        private float _size;
+        private Vector3 _velocity;
+        private GameMapService _gameMapService;
+
+        public AsteroidSize Size { get; private set; }
 
         [Inject]
         public void Construct(AsteroidSpawnPayload spawnPayload, GameMapService gameMapService)
@@ -33,11 +34,12 @@ namespace _Asteroids.CodeBase.Gameplay.Asteroid
             transform.position = spawnPayload.Position;
             transform.rotation = Quaternion.Euler(0, 0, spawnPayload.Rotation);
 
-            _velocity = spawnPayload.MoveDirection * 1;
-            _rotationSpeed = 30;
-            _size = 1;
+            _velocity = spawnPayload.MoveDirection * spawnPayload.MoveSpeed;
+            _rotationSpeed = spawnPayload.RotationSpeed;
+            _spriteRenderer.sprite = spawnPayload.Sprite;
+            _circleCollider.radius = spawnPayload.Radius;
 
-            _circleCollider.radius = _size;
+            Size = spawnPayload.Size;
         }
 
         private void Start()
@@ -55,7 +57,7 @@ namespace _Asteroids.CodeBase.Gameplay.Asteroid
         private void FixedUpdate()
         {
             var newPosition = transform.position + _velocity * Time.fixedDeltaTime;
-            var wrappedPosition = _gameMapService.WrapPosition(newPosition, _size);
+            var wrappedPosition = _gameMapService.WrapPosition(newPosition, _circleCollider.radius);
 
             _rigidbody.MovePosition(wrappedPosition);
             _rigidbody.MoveRotation(transform.rotation.eulerAngles.z + _rotationSpeed * Time.fixedDeltaTime);

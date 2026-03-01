@@ -1,3 +1,4 @@
+using _Asteroids.CodeBase.Configs;
 using _Asteroids.CodeBase.Factories.Payloads;
 using _Asteroids.CodeBase.Gameplay.Asteroid;
 using _Asteroids.CodeBase.Gameplay.Starship;
@@ -13,6 +14,7 @@ namespace _Asteroids.CodeBase.Infrastructure
     public class GameplaySceneInstaller : MonoInstaller
     {
         [SerializeField, Required] private Camera _camera;
+        [SerializeField, Required] private GameConfig _gameConfig;
 
         [SerializeField, Required] private Starship _starship;
 
@@ -32,6 +34,7 @@ namespace _Asteroids.CodeBase.Infrastructure
             Container.BindFactory<BulletSpawnPayload, Bullet, Bullet.Factory>().FromComponentInNewPrefab(_bulletPrefab);
             Container.BindFactory<AsteroidSpawnPayload, Asteroid, Asteroid.Factory>().FromComponentInNewPrefab(_asteroidPrefab);
 
+            Container.Bind<GameConfigService>().AsSingle().WithArguments(_gameConfig);
             Container.Bind<SceneObjectService>().AsSingle().WithArguments(_camera);
             Container.Bind<RandomService>().AsTransient();
             Container.Bind<GameMapService>().AsSingle();

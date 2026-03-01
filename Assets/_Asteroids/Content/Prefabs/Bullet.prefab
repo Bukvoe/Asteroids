@@ -170,3 +170,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Components.Bullet
   _rigidbody: {fileID: 8084331881344309791}
+  _collider: {fileID: 2360910261040145566}

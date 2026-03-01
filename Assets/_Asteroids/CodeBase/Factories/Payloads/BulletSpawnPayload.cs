@@ -5,10 +5,10 @@ namespace _Asteroids.CodeBase.Factories.Payloads
 {
     public struct BulletSpawnPayload
     {
-        public Vector2 Position;
-        public Vector2 Direction;
-        public float Speed;
-        public EntityTag EntityTag;
+        public readonly Vector2 Position;
+        public readonly Vector2 Direction;
+        public readonly float Speed;
+        public readonly EntityTag EntityTag;
 
         public BulletSpawnPayload(Vector2 position, Vector2 direction, float speed, EntityTag entityTag)
         {

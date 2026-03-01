@@ -13,25 +13,27 @@ namespace _Asteroids.CodeBase.Services
 
         private readonly Asteroid.Factory _asteroidFactory;
         private readonly GameMapService _gameMapService;
+        private readonly GameConfigService _gameConfigService;
         private readonly RandomService _randomService;
 
         private readonly List<Asteroid> _spawnedAsteroids = new();
-
-        private readonly int _maxAsteroids;
-
+        private readonly int _maxLargeAsteroids;
         private readonly float _maxSpawnCooldown;
+
         private float _spawnCooldown;
 
         public AsteroidService(
             Asteroid.Factory asteroidFactory,
             GameMapService gameMapService,
+            GameConfigService gameConfigService,
             RandomService randomService)
         {
             _asteroidFactory = asteroidFactory;
             _gameMapService = gameMapService;
+            _gameConfigService = gameConfigService;
             _randomService = randomService;
 
-            _maxAsteroids = 5;
+            _maxLargeAsteroids = 5;
             _maxSpawnCooldown = 5;
         }
 
@@ -39,25 +41,34 @@ namespace _Asteroids.CodeBase.Services
         {
             _spawnCooldown -= Time.deltaTime;
 
-            if (_spawnCooldown <= 0f && _spawnedAsteroids.Count < _maxAsteroids)
+            if (_spawnCooldown <= 0f && CountAsteroidsBySize(AsteroidSize.Large) < _maxLargeAsteroids)
             {
-                SpawnAsteroid();
+                SpawnAsteroid(AsteroidSize.Large, _gameMapService.GetSpawnRandomPoint());
                 _spawnCooldown += _maxSpawnCooldown;
             }
         }
 
-        private void SpawnAsteroid()
+        private void SpawnAsteroid(AsteroidSize size, Vector2 spawnPosition)
         {
-            var spawnPosition = _gameMapService.GetSpawnRandomPoint();
-            var rotationAngle = _randomService.RandomAngle();
+            var spawnRotation = _randomService.RandomAngle();
             var moveDirection = (_gameMapService.GetMapRandomPoint() - spawnPosition).normalized;
-            var rotatesClockwise = _randomService.RandomBool();
+            var asteroidConfig = _gameConfigService.GetAsteroidConfigBySize(size);
+            var rotationSpeed = _randomService.ApplyRandomSign(asteroidConfig.RotationSpeed);
 
-            var spawnPayload = new AsteroidSpawnPayload(spawnPosition, rotationAngle, moveDirection, rotatesClockwise);
+            var spawnPayload = new AsteroidSpawnPayload(
+                size: asteroidConfig.Size,
+                position: spawnPosition,
+                rotation: spawnRotation,
+                moveDirection: moveDirection,
+                moveSpeed: asteroidConfig.MoveSpeed,
+                rotationSpeed: rotationSpeed,
+                radius: asteroidConfig.Radius,
+                sprite: asteroidConfig.Sprite);
+
             var asteroid = _asteroidFactory.Create(spawnPayload);
 
-            _spawnedAsteroids.Add(asteroid);
             asteroid.OnDestroyed += OnAsteroidDestroyed;
+            _spawnedAsteroids.Add(asteroid);
         }
 
         private void OnAsteroidDestroyed(Asteroid asteroid)
@@ -66,6 +77,40 @@ namespace _Asteroids.CodeBase.Services
             _spawnedAsteroids.Remove(asteroid);
 
             AsteroidDestroyed?.Invoke();
+
+            SplitAsteroid(asteroid);
+        }
+
+        private void SplitAsteroid(Asteroid asteroid)
+        {
+            var asteroidConfig = _gameConfigService.GetAsteroidConfigBySize(asteroid.Size);
+
+            if (asteroidConfig.NextSize == AsteroidSize.None)
+            {
+                return;
+            }
+
+            for (var i = 0; i < asteroidConfig.Fragments; i++)
+            {
+                SpawnAsteroid(asteroidConfig.NextSize, asteroid.transform.position);
+            }
+        }
+
+        private int CountAsteroidsBySize(AsteroidSize size)
+        {
+            var count = 0;
+
+            for (var i = 0; i < _spawnedAsteroids.Count; i++)
+            {
+                var asteroid = _spawnedAsteroids[i];
+
+                if (asteroid.Size == size)
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
 
         public void Dispose()

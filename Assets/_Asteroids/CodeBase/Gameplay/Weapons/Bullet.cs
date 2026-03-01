@@ -11,6 +11,7 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
         private const float Lifetime = 5f;
 
         [SerializeField, Required] private Rigidbody2D _rigidbody;
+        [SerializeField, Required] private Collider2D _collider;
 
         private Vector3 _velocity;
 
@@ -40,6 +41,7 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
             if (other.TryGetComponent(out IDamageable damageable) && damageable.CanBeDamagedBy(this))
             {
                 damageable.TakeDamage();
+                _collider.enabled = false;
                 Destroy(gameObject);
             }
         }
