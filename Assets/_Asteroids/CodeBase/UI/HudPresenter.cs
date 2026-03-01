@@ -1,6 +1,6 @@
 ﻿using System;
-using _Asteroids.CodeBase.Components;
-using _Asteroids.CodeBase.Entities.Starship;
+using _Asteroids.CodeBase.Gameplay.Starship;
+using _Asteroids.CodeBase.Gameplay.Weapons;
 using UnityEngine;
 using Zenject;
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using _Asteroids.CodeBase.Entities.Starship;
+using _Asteroids.CodeBase.Gameplay.Starship;
 using Zenject;
 
 namespace _Asteroids.CodeBase.UI

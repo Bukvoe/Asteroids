@@ -1,6 +1,6 @@
 using System;
 
-namespace _Asteroids.CodeBase.Entities
+namespace _Asteroids.CodeBase.Gameplay.Common
 {
     [Flags]
     public enum EntityTag

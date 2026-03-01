@@ -1,10 +1,10 @@
-using _Asteroids.CodeBase.Entities;
 using _Asteroids.CodeBase.Factories.Payloads;
+using _Asteroids.CodeBase.Gameplay.Common;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
-namespace _Asteroids.CodeBase.Components
+namespace _Asteroids.CodeBase.Gameplay.Weapons
 {
     public partial class Bullet : MonoBehaviour, IDamageSource
     {

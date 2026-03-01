@@ -2,7 +2,7 @@ using _Asteroids.CodeBase.Factories.Payloads;
 using UnityEngine;
 using Zenject;
 
-namespace _Asteroids.CodeBase.Components
+namespace _Asteroids.CodeBase.Gameplay.Weapons
 {
     public partial class BulletWeapon : MonoBehaviour, IWeapon
     {

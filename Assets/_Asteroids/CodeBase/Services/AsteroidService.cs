@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using _Asteroids.CodeBase.Entities.Asteroid;
 using _Asteroids.CodeBase.Factories.Payloads;
+using _Asteroids.CodeBase.Gameplay.Asteroid;
 using UnityEngine;
 using Zenject;
 
@@ -55,10 +55,24 @@ namespace _Asteroids.CodeBase.Services
             var asteroid = _asteroidFactory.Create(spawnPayload);
 
             _spawnedAsteroids.Add(asteroid);
+            asteroid.OnDestroyed += OnAsteroidDestroyed;
+        }
+
+        private void OnAsteroidDestroyed(Asteroid asteroid)
+        {
+            asteroid.OnDestroyed -= OnAsteroidDestroyed;
+            _spawnedAsteroids.Remove(asteroid);
         }
 
         public void Dispose()
         {
+            foreach (var asteroid in _spawnedAsteroids)
+            {
+                if (asteroid != null)
+                {
+                    asteroid.OnDestroyed -= OnAsteroidDestroyed;
+                }
+            }
         }
     }
 }

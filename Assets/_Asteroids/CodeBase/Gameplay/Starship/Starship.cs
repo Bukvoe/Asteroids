@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Asteroids.CodeBase.Entities.Starship
+namespace _Asteroids.CodeBase.Gameplay.Starship
 {
     public class Starship : MonoBehaviour
     {

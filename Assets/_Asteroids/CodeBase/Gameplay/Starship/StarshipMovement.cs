@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
-namespace _Asteroids.CodeBase.Entities.Starship
+namespace _Asteroids.CodeBase.Gameplay.Starship
 {
     public class StarshipMovement : MonoBehaviour
     {

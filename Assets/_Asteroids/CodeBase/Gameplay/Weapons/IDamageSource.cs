@@ -1,6 +1,6 @@
-using _Asteroids.CodeBase.Entities;
+using _Asteroids.CodeBase.Gameplay.Common;
 
-namespace _Asteroids.CodeBase.Components
+namespace _Asteroids.CodeBase.Gameplay.Weapons
 {
     public interface IDamageSource
     {

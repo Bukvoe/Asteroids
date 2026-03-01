@@ -1,5 +1,5 @@
 using System;
-using _Asteroids.CodeBase.Entities.Starship;
+using _Asteroids.CodeBase.Gameplay.Starship;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;

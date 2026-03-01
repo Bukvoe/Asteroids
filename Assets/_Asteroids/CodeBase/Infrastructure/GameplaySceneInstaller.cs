@@ -1,7 +1,7 @@
-using _Asteroids.CodeBase.Components;
-using _Asteroids.CodeBase.Entities.Asteroid;
-using _Asteroids.CodeBase.Entities.Starship;
 using _Asteroids.CodeBase.Factories.Payloads;
+using _Asteroids.CodeBase.Gameplay.Asteroid;
+using _Asteroids.CodeBase.Gameplay.Starship;
+using _Asteroids.CodeBase.Gameplay.Weapons;
 using _Asteroids.CodeBase.Services;
 using _Asteroids.CodeBase.UI;
 using Sirenix.OdinInspector;

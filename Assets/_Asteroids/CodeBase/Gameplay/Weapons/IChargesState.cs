@@ -1,4 +1,4 @@
-namespace _Asteroids.CodeBase.Components
+namespace _Asteroids.CodeBase.Gameplay.Weapons
 {
     public interface IChargesState
     {

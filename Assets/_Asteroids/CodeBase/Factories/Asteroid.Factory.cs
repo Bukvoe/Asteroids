@@ -1,7 +1,7 @@
 using _Asteroids.CodeBase.Factories.Payloads;
 using Zenject;
 
-namespace _Asteroids.CodeBase.Entities.Asteroid
+namespace _Asteroids.CodeBase.Gameplay.Asteroid
 {
     public partial class Asteroid
     {

@@ -1,10 +1,11 @@
-using _Asteroids.CodeBase.Components;
 using _Asteroids.CodeBase.Factories.Payloads;
+using _Asteroids.CodeBase.Gameplay.Common;
+using _Asteroids.CodeBase.Gameplay.Weapons;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
-namespace _Asteroids.CodeBase.Entities.Starship
+namespace _Asteroids.CodeBase.Gameplay.Starship
 {
     public class StarshipWeapon : MonoBehaviour
     {

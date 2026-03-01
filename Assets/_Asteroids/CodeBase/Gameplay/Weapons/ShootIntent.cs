@@ -1,7 +1,7 @@
-using _Asteroids.CodeBase.Entities;
+using _Asteroids.CodeBase.Gameplay.Common;
 using UnityEngine;
 
-namespace _Asteroids.CodeBase.Components
+namespace _Asteroids.CodeBase.Gameplay.Weapons
 {
     public struct ShootIntent
     {

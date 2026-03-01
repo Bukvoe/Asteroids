@@ -1,6 +1,6 @@
 using System;
 
-namespace _Asteroids.CodeBase.Components
+namespace _Asteroids.CodeBase.Gameplay.Weapons
 {
     public class BulletWeaponState : IWeaponState, ICooldownState
     {

@@ -1,4 +1,4 @@
-using _Asteroids.CodeBase.Entities;
+using _Asteroids.CodeBase.Gameplay.Common;
 using UnityEngine;
 
 namespace _Asteroids.CodeBase.Factories.Payloads
@@ -10,12 +10,12 @@ namespace _Asteroids.CodeBase.Factories.Payloads
         public float Speed;
         public EntityTag EntityTag;
 
-        public BulletSpawnPayload(Vector2 position, Vector2 direction, float speed, EntityTag etityTag)
+        public BulletSpawnPayload(Vector2 position, Vector2 direction, float speed, EntityTag entityTag)
         {
             Position = position;
             Direction = direction;
             Speed = speed;
-            EntityTag = etityTag;
+            EntityTag = entityTag;
         }
     }
 }

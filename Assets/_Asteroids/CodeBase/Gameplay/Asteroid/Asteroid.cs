@@ -1,13 +1,19 @@
+using System;
 using _Asteroids.CodeBase.Factories.Payloads;
+using _Asteroids.CodeBase.Gameplay.Common;
 using _Asteroids.CodeBase.Services;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
-namespace _Asteroids.CodeBase.Entities.Asteroid
+namespace _Asteroids.CodeBase.Gameplay.Asteroid
 {
     public partial class Asteroid : MonoBehaviour
     {
+        public event Action<Asteroid> OnDestroyed;
+
+        [SerializeField, Required] private Destroyable _destroyable;
+
         [SerializeField, Required] private SpriteRenderer _spriteRenderer;
         [SerializeField, Required] private CircleCollider2D _circleCollider;
 
@@ -33,9 +39,18 @@ namespace _Asteroids.CodeBase.Entities.Asteroid
             _circleCollider.radius = _size;
         }
 
+        private void Start()
+        {
+            _destroyable.OnDestroyed += NotifyDestroyed;
+        }
+
+        private void OnDestroy()
+        {
+            _destroyable.OnDestroyed -= NotifyDestroyed;
+        }
+
         private void FixedUpdate()
         {
-            const float objectRadius = 0.5f;
             var newPosition = transform.position + _velocity * Time.fixedDeltaTime;
             var wrappedPosition = _gameMapService.WrapPosition(newPosition, _size);
 
@@ -45,6 +60,11 @@ namespace _Asteroids.CodeBase.Entities.Asteroid
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+        }
+
+        private void NotifyDestroyed()
+        {
+            OnDestroyed?.Invoke(this);
         }
     }
 }

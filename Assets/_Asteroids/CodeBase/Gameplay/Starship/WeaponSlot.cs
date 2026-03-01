@@ -1,4 +1,4 @@
-namespace _Asteroids.CodeBase.Entities.Starship
+namespace _Asteroids.CodeBase.Gameplay.Starship
 {
     public enum WeaponSlot
     {
