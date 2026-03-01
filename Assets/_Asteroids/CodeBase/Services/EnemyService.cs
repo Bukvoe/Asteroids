@@ -32,6 +32,7 @@ namespace _Asteroids.CodeBase.Services
             _ufoFactory = ufoFactory;
             _gameMapService = gameMapService;
             _gameConfigService = gameConfigService;
+            _starship = starship;
 
             var enemySpawnConfig = gameConfigService.EnemySpawnConfig;
 
