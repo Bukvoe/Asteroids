@@ -15,6 +15,8 @@ namespace _Asteroids.CodeBase.UI
 
         [SerializeField, Required] private TextMeshProUGUI _cooldownLabel;
 
+        [SerializeField, Required] private TextMeshProUGUI _scoreLabel;
+
         public void UpdatePosition(Vector2 position)
         {
             _positionLabel.text = $"x: {position.x:F2} y: {position.y:F2}";
@@ -58,6 +60,11 @@ namespace _Asteroids.CodeBase.UI
         public void HideCooldown()
         {
             _cooldownLabel.gameObject.SetActive(false);
+        }
+
+        public void UpdateScore(int value)
+        {
+            _scoreLabel.text = $"{value}";
         }
     }
 }

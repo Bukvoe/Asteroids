@@ -9,6 +9,8 @@ namespace _Asteroids.CodeBase.Services
 {
     public class AsteroidService : ITickable, IDisposable
     {
+        public event Action AsteroidDestroyed;
+
         private readonly Asteroid.Factory _asteroidFactory;
         private readonly GameMapService _gameMapService;
         private readonly RandomService _randomService;
@@ -62,6 +64,8 @@ namespace _Asteroids.CodeBase.Services
         {
             asteroid.OnDestroyed -= OnAsteroidDestroyed;
             _spawnedAsteroids.Remove(asteroid);
+
+            AsteroidDestroyed?.Invoke();
         }
 
         public void Dispose()

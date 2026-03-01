@@ -1,6 +1,7 @@
 ﻿using System;
 using _Asteroids.CodeBase.Gameplay.Starship;
 using _Asteroids.CodeBase.Gameplay.Weapons;
+using _Asteroids.CodeBase.Services;
 using UnityEngine;
 using Zenject;
 
@@ -8,13 +9,15 @@ namespace _Asteroids.CodeBase.UI
 {
     public class HudPresenter : IInitializable, IDisposable
     {
-        private readonly Starship _starship;
         private readonly HudView _hudView;
+        private readonly Starship _starship;
+        private readonly GameSessionService _gameSessionService;
 
-        public HudPresenter(HudView hudView, Starship starship)
+        public HudPresenter(HudView hudView, Starship starship, GameSessionService gameSessionService)
         {
             _hudView = hudView;
             _starship = starship;
+            _gameSessionService = gameSessionService;
         }
 
         public void Initialize()
@@ -24,7 +27,10 @@ namespace _Asteroids.CodeBase.UI
             _starship.Movement.OnSpeedChanged += UpdateSpeed;
             _starship.Weapon.Secondary.State.Changed += UpdateWeaponState;
 
+            _gameSessionService.ScoreChanged += UpdateScore;
+
             UpdateWeaponState();
+            UpdateScore();
         }
 
         public void Dispose()
@@ -33,6 +39,8 @@ namespace _Asteroids.CodeBase.UI
             _starship.Movement.OnRotationChanged -= UpdateAngle;
             _starship.Movement.OnSpeedChanged -= UpdateSpeed;
             _starship.Weapon.Secondary.State.Changed -= UpdateWeaponState;
+
+            _gameSessionService.ScoreChanged -= UpdateScore;
         }
 
         private void UpdatePosition(Vector2 position)
@@ -81,6 +89,11 @@ namespace _Asteroids.CodeBase.UI
             {
                 _hudView.HideCooldown();
             }
+        }
+
+        private void UpdateScore()
+        {
+            _hudView.UpdateScore(_gameSessionService.Score);
         }
     }
 }

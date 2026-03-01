@@ -33,9 +33,10 @@ namespace _Asteroids.CodeBase.Infrastructure
             Container.BindFactory<AsteroidSpawnPayload, Asteroid, Asteroid.Factory>().FromComponentInNewPrefab(_asteroidPrefab);
 
             Container.Bind<SceneObjectService>().AsSingle().WithArguments(_camera);
-            Container.Bind<RandomService>().AsSingle();
+            Container.Bind<RandomService>().AsTransient();
             Container.Bind<GameMapService>().AsSingle();
-            Container.BindInterfacesTo<AsteroidService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<AsteroidService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<GameSessionService>().AsSingle().NonLazy();
             Container.BindInterfacesTo<InputService>().AsSingle().NonLazy();
 
             Container.Bind<HudView>().FromInstance(_hudView).AsSingle();
