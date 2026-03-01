@@ -5,5 +5,7 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
         public IWeaponState State { get; }
         public bool CanShoot();
         public void Shoot(ShootIntent shotIntent);
+
+        public void ReleaseShoot();
     }
 }

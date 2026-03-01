@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: W - Accelerate
+  m_text: '[W] - Accelerate'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -475,6 +475,8 @@ MonoBehaviour:
   _starshipPrefab: {fileID: 8979178246216539600, guid: 764e074714a8dce40be67ca528548408, type: 3}
   _bulletWeaponPrefab: {fileID: 4258941227516353797, guid: a220ca79a5ac46f48a7bde07bfca50fc, type: 3}
   _bulletPrefab: {fileID: 6168947628470820321, guid: d268d2074ef345543b90fc4e4da9b68d, type: 3}
+  _laserWeaponPrefab: {fileID: 971774734499406319, guid: 22cd9e088aceed745944700409395096, type: 3}
+  _laserPrefab: {fileID: -7687148492131725963, guid: f3f27f1c1002b314c97a95d502a184e0, type: 3}
   _asteroidPrefab: {fileID: 6211795482549401146, guid: 69c263fb8606d754c9c7421e6a5b7609, type: 3}
   _hudView: {fileID: 9082507331653336628}
   _loseView: {fileID: 7135893743191560921}
@@ -793,7 +795,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[RMB] - Laser'
+  m_text: '[RMB] (Hold) - Laser'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1130,6 +1132,10 @@ MonoBehaviour:
     RotationSpeed: 200
     BulletWeaponCooldown: 0.5
     BulletSpeed: 6
+    LaserWeaponCharges: 3
+    LaserWeaponCooldown: 7
+    LaserDistance: 5
+    LaserDuration: 1
   <AsteroidSpawn>k__BackingField:
     AsteroidToSpawn: 3
     MaxAsteroids: 6
@@ -1266,7 +1272,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A/D - Rotate
+  m_text: '[A]/[D] - Rotate'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

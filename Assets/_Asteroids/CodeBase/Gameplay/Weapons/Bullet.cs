@@ -20,10 +20,10 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
         [Inject]
         public void Construct(BulletSpawnPayload spawnPayload)
         {
-            EntityTag = spawnPayload.EntityTag;
-
             transform.position = spawnPayload.Position;
             _velocity = spawnPayload.Direction * spawnPayload.Speed;
+
+            EntityTag = spawnPayload.EntityTag;
         }
 
         private void Start()

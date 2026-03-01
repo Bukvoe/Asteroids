@@ -16,7 +16,10 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
         public IWeapon Secondary { get; private set; }
 
         [Inject]
-        private void Construct(GameConfigService gameConfigService, BulletWeapon.Factory bulletWeaponFactory)
+        private void Construct(
+            GameConfigService gameConfigService,
+            BulletWeapon.Factory bulletWeaponFactory,
+            LaserWeapon.Factory laserWeaponFactory)
         {
             var starshipConfig = gameConfigService.StarshipConfig;
 
@@ -26,7 +29,15 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
                 bulletSpeed: starshipConfig.BulletSpeed);
 
             Primary = bulletWeaponFactory.Create(bulletWeaponSpawnPayload);
-            Secondary = bulletWeaponFactory.Create(bulletWeaponSpawnPayload);
+
+            var laserWeaponSpawnPayload = new LaserWeaponSpawnPayload(
+                parent: _weaponsRoot,
+                chargeCooldown: starshipConfig.LaserWeaponCooldown,
+                maxCharges: starshipConfig.LaserWeaponCharges,
+                distance: starshipConfig.LaserDistance,
+                duration: starshipConfig.LaserDuration);
+
+            Secondary = laserWeaponFactory.Create(laserWeaponSpawnPayload);
         }
 
         public void ShootPrimary()
@@ -34,9 +45,19 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
             Shoot(Primary);
         }
 
+        public void ReleasePrimary()
+        {
+            Release(Primary);
+        }
+
         public void ShootSecondary()
         {
             Shoot(Secondary);
+        }
+
+        public void ReleaseSecondary()
+        {
+            Release(Secondary);
         }
 
         private void Shoot(IWeapon weapon)
@@ -44,6 +65,14 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
             if (weapon != null && weapon.CanShoot())
             {
                 weapon.Shoot(new ShootIntent(_weaponsRoot.position, _weaponsRoot.up, EntityTag.Player));
+            }
+        }
+
+        private void Release(IWeapon weapon)
+        {
+            if (weapon != null)
+            {
+                weapon.ReleaseShoot();
             }
         }
     }

@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Asteroids.CodeBase.Configs
 {
@@ -16,5 +15,10 @@ namespace _Asteroids.CodeBase.Configs
 
         public float BulletWeaponCooldown;
         public float BulletSpeed;
+
+        public int LaserWeaponCharges;
+        public float LaserWeaponCooldown;
+        public float LaserDistance;
+        public float LaserDuration;
     }
 }

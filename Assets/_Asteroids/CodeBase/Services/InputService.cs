@@ -1,6 +1,5 @@
 using System;
 using _Asteroids.CodeBase.Gameplay.Starship;
-using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
@@ -37,18 +36,29 @@ namespace _Asteroids.CodeBase.Services
                 return;
             }
 
-            var isAccelerating = Mathf.Approximately(_accelerationAction.ReadValue<float>(), 1f);
+            var isAccelerating = _accelerationAction.IsPressed();
             var rotationValue = _rotationAction.ReadValue<float>();
 
             _starship.Movement.SetMoveIntent(new MoveIntent(isAccelerating, rotationValue));
 
-            if (Mathf.Approximately(_primaryAttackAction.ReadValue<float>(), 1f))
+            if (_primaryAttackAction.WasPressedThisFrame())
             {
                 _starship.Weapon.ShootPrimary();
             }
-            else if (Mathf.Approximately(_secondaryAttackAction.ReadValue<float>(), 1f))
+
+            if (_primaryAttackAction.WasReleasedThisFrame())
+            {
+                _starship.Weapon.ReleasePrimary();
+            }
+
+            if (_secondaryAttackAction.WasPressedThisFrame())
             {
                 _starship.Weapon.ShootSecondary();
+            }
+
+            if (_secondaryAttackAction.WasReleasedThisFrame())
+            {
+                _starship.Weapon.ReleaseSecondary();
             }
         }
 

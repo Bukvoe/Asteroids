@@ -21,6 +21,9 @@ namespace _Asteroids.CodeBase.Infrastructure
         [SerializeField, Required] private BulletWeapon _bulletWeaponPrefab;
         [SerializeField, Required] private Bullet _bulletPrefab;
 
+        [SerializeField, Required] private LaserWeapon _laserWeaponPrefab;
+        [SerializeField, Required] private Laser _laserPrefab;
+
         [SerializeField, Required] private Asteroid _asteroidPrefab;
 
         [SerializeField, Required] private HudView _hudView;
@@ -30,6 +33,8 @@ namespace _Asteroids.CodeBase.Infrastructure
         {
             Container.BindFactory<BulletWeaponSpawnPayload, BulletWeapon, BulletWeapon.Factory>().FromComponentInNewPrefab(_bulletWeaponPrefab);
             Container.BindFactory<BulletSpawnPayload, Bullet, Bullet.Factory>().FromComponentInNewPrefab(_bulletPrefab);
+            Container.BindFactory<LaserWeaponSpawnPayload, LaserWeapon, LaserWeapon.Factory>().FromComponentInNewPrefab(_laserWeaponPrefab);
+            Container.BindFactory<LaserSpawnPayload, Laser, Laser.Factory>().FromComponentInNewPrefab(_laserPrefab);
             Container.BindFactory<AsteroidSpawnPayload, Asteroid, Asteroid.Factory>().FromComponentInNewPrefab(_asteroidPrefab);
 
             Container.Bind<GameConfigService>().AsSingle().WithArguments(_gameConfig);

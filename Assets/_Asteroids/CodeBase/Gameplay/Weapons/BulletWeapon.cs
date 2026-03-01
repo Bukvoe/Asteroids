@@ -44,5 +44,9 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
             var payload = new BulletSpawnPayload(shootIntent.From, shootIntent.Direction, _bulletSpeed, shootIntent.EntityTag);
             _bulletFactory.Create(payload);
         }
+
+        public void ReleaseShoot()
+        {
+        }
     }
 }
