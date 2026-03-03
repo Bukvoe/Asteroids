@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace _Asteroids.CodeBase.Configs
 {
-    public class GameConfig : MonoBehaviour
+    [CreateAssetMenu(menuName = "Configs/GameConfig")]
+    public class GameConfig : ScriptableObject
     {
         [field: SerializeField] public StarshipConfig Starship { get; private set; }
 
