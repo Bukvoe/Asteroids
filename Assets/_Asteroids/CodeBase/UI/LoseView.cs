@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,8 @@ namespace _Asteroids.CodeBase.UI
 {
     public class LoseView : MonoBehaviour
     {
+        public event Action RestartRequested;
+
         [SerializeField, Required] private TextMeshProUGUI _scoreLabel;
         [SerializeField, Required] private Button _restartButton;
 
@@ -38,8 +41,7 @@ namespace _Asteroids.CodeBase.UI
 
         private void RestartScene()
         {
-            var scene = SceneManager.GetActiveScene().name;
-            SceneManager.LoadScene(scene);
+            RestartRequested?.Invoke();
         }
     }
 }

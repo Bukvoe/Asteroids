@@ -1,0 +1,15 @@
+using _Asteroids.CodeBase.Services.SceneLoad;
+using Zenject;
+
+namespace _Asteroids.CodeBase.Infrastructure
+{
+    public class ProjectInstaller : MonoInstaller
+    {
+        public override void InstallBindings()
+        {
+            Container.Bind<ISceneLoadService>().To<SceneLoadService>().AsSingle();
+
+            Container.BindInterfacesTo<EntryPoint>().AsSingle().NonLazy();
+        }
+    }
+}
