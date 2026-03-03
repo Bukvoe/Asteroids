@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d4689ab63444c35ae85809ea6d121d6, type: 3}
+  m_Name: GameConfig
+  m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Configs.GameConfig2
+  <Starship>k__BackingField:
+    Radius: 0.3
+    MaxSpeed: 3.5
+    TimeToMaxSpeed: 2
+    SpeedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    RotationSpeed: 200
+    BulletWeaponCooldown: 0.5
+    BulletSpeed: 6
+    LaserWeaponCharges: 3
+    LaserWeaponCooldown: 7
+    LaserDistance: 5
+    LaserDuration: 1
+  <AsteroidSpawn>k__BackingField:
+    AsteroidToSpawn: 3
+    MaxAsteroids: 6
+    SpawnCooldown: 4
+  <Asteroids>k__BackingField:
+  - Size: 3
+    MoveSpeed: 1.5
+    RotationSpeed: 20
+    Radius: 0.6
+    Sprite: {fileID: -7097594788527198317, guid: 36cb42772604b3045a063bbd7e95f191, type: 3}
+    NextSize: 2
+    Fragments: 2
+  - Size: 2
+    MoveSpeed: 2
+    RotationSpeed: 60
+    Radius: 0.3
+    Sprite: {fileID: 40701928262675801, guid: 541deed03fe54f24ea80f428edc0b56c, type: 3}
+    NextSize: 1
+    Fragments: 3
+  - Size: 1
+    MoveSpeed: 2.5
+    RotationSpeed: 100
+    Radius: 0.2
+    Sprite: {fileID: -6613794951689082208, guid: 42478693aabd52847ac78dca5cb3a458, type: 3}
+    NextSize: 0
+    Fragments: 0
+  <EnemySpawn>k__BackingField:
+    MaxUfos: 3
+    SpawnUfoCooldown: 8
+  <Ufo>k__BackingField:
+    MovementSpeed: 1
+    BulletWeaponCooldown: 2
+    BulletSpeed: 2
+  <Score>k__BackingField:
+    SmallAsteroidScore: 30
+    MediumAsteroidScore: 20
+    LargeAsteroidScore: 10
+    UfoScore: 25
