@@ -231,6 +231,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Codebase.UI.LoseView
   _scoreLabel: {fileID: 6864488233536650163}
+  _bestScoreLabel: {fileID: 1915564689117738278}
+  _runsLabel: {fileID: 360788722359724858}
+  _ufoDestroyedLabel: {fileID: 2369393893965241778}
   _restartButton: {fileID: 4478565403716294984}
 --- !u!1 &1677766413268132327
 GameObject:
