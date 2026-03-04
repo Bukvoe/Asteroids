@@ -11,6 +11,7 @@ namespace _Asteroids.CodeBase.Services
     public class CurrentRunService : IInitializable, IDisposable
     {
         public event Action ScoreChanged;
+        public event Action RunEnded;
 
         private readonly AsteroidService _asteroidService;
         private readonly EnemyService _enemyService;
@@ -82,6 +83,8 @@ namespace _Asteroids.CodeBase.Services
 
         private void OnStarshipDestroyed()
         {
+            _playerProgressService.UpdateProgress(_runResult);
+            RunEnded?.Invoke();
         }
 
         private void AddScore(int score)

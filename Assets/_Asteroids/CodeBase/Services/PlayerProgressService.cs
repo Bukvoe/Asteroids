@@ -27,7 +27,11 @@ namespace _Asteroids.CodeBase.Services
 
         public void UpdateProgress(RunResult runResult)
         {
-            _playerProgress.BestScore = runResult.Score;
+            if (runResult.Score > BestScore)
+            {
+                _playerProgress.BestScore = runResult.Score;
+            }
+
             _playerProgress.UfoDestroyed += runResult.UfoDestroyed;
             _playerProgress.Runs++;
 
