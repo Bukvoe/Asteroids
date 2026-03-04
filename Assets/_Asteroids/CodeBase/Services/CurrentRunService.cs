@@ -1,25 +1,40 @@
 using System;
 using _Asteroids.CodeBase.Configs;
+using _Asteroids.CodeBase.Data;
 using _Asteroids.CodeBase.Gameplay.Asteroid;
+using _Asteroids.CodeBase.Gameplay.Starship;
 using _Asteroids.CodeBase.Gameplay.Ufo;
 using Zenject;
 
 namespace _Asteroids.CodeBase.Services
 {
-    public class GameSessionService : IInitializable, IDisposable
+    public class CurrentRunService : IInitializable, IDisposable
     {
         public event Action ScoreChanged;
+        public event Action RunEnded;
 
         private readonly AsteroidService _asteroidService;
         private readonly EnemyService _enemyService;
         private readonly ScoreConfig _scoreConfig;
+        private readonly PlayerProgressService _playerProgressService;
+        private readonly Starship _starship;
+        private readonly RunResult _runResult;
 
-        public int Score { get; private set; }
+        public int Score => _runResult.Score;
 
-        public GameSessionService(AsteroidService asteroidService, EnemyService enemyService, GameConfigService gameConfigService)
+        public CurrentRunService(
+            AsteroidService asteroidService,
+            EnemyService enemyService,
+            GameConfigService gameConfigService,
+            PlayerProgressService playerProgressService,
+            Starship starship)
         {
+            _runResult = new RunResult();
+
             _asteroidService = asteroidService;
             _enemyService = enemyService;
+            _playerProgressService = playerProgressService;
+            _starship = starship;
 
             _scoreConfig = gameConfigService.ScoreConfig;
         }
@@ -28,12 +43,14 @@ namespace _Asteroids.CodeBase.Services
         {
             _asteroidService.AsteroidDestroyed += OnAsteroidDestroyed;
             _enemyService.UfoDestroyed += OnUfoDestroyed;
+            _starship.OnDestroyed += OnStarshipDestroyed;
         }
 
         public void Dispose()
         {
             _asteroidService.AsteroidDestroyed -= OnAsteroidDestroyed;
             _enemyService.UfoDestroyed -= OnUfoDestroyed;
+            _starship.OnDestroyed -= OnStarshipDestroyed;
         }
 
         private void OnAsteroidDestroyed(Asteroid asteroid)
@@ -60,12 +77,19 @@ namespace _Asteroids.CodeBase.Services
 
         private void OnUfoDestroyed(Ufo ufo)
         {
+            _runResult.UfoDestroyed++;
             AddScore(_scoreConfig.UfoScore);
+        }
+
+        private void OnStarshipDestroyed()
+        {
+            _playerProgressService.UpdateProgress(_runResult);
+            RunEnded?.Invoke();
         }
 
         private void AddScore(int score)
         {
-            Score += score;
+            _runResult.Score += score;
             ScoreChanged?.Invoke();
         }
     }

@@ -11,13 +11,16 @@ namespace _Asteroids.CodeBase.UI
     {
         private readonly HudView _hudView;
         private readonly Starship _starship;
-        private readonly GameSessionService _gameSessionService;
+        private readonly CurrentRunService _currentRunService;
 
-        public HudPresenter(HudView hudView, Starship starship, GameSessionService gameSessionService)
+        public HudPresenter(
+            HudView hudView,
+            Starship starship,
+            CurrentRunService currentRunService)
         {
             _hudView = hudView;
             _starship = starship;
-            _gameSessionService = gameSessionService;
+            _currentRunService = currentRunService;
         }
 
         public void Initialize()
@@ -27,7 +30,7 @@ namespace _Asteroids.CodeBase.UI
             _starship.Movement.OnSpeedChanged += UpdateSpeed;
             _starship.Weapon.Secondary.State.Changed += UpdateWeaponState;
 
-            _gameSessionService.ScoreChanged += UpdateScore;
+            _currentRunService.ScoreChanged += UpdateScore;
 
             UpdateWeaponState();
             UpdateScore();
@@ -40,7 +43,7 @@ namespace _Asteroids.CodeBase.UI
             _starship.Movement.OnSpeedChanged -= UpdateSpeed;
             _starship.Weapon.Secondary.State.Changed -= UpdateWeaponState;
 
-            _gameSessionService.ScoreChanged -= UpdateScore;
+            _currentRunService.ScoreChanged -= UpdateScore;
         }
 
         private void UpdatePosition(Vector2 position)
@@ -93,7 +96,7 @@ namespace _Asteroids.CodeBase.UI
 
         private void UpdateScore()
         {
-            _hudView.UpdateScore(_gameSessionService.Score);
+            _hudView.UpdateScore(_currentRunService.Score);
         }
     }
 }

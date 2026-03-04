@@ -47,7 +47,7 @@ namespace _Asteroids.CodeBase.Infrastructure
             Container.Bind<GameMapService>().AsSingle();
             Container.BindInterfacesAndSelfTo<AsteroidService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<EnemyService>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<GameSessionService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<CurrentRunService>().AsSingle().NonLazy();
 
             Container.Bind<Starship>().FromComponentInNewPrefab(_starshipPrefab).AsSingle();
             Container.BindInterfacesTo<InputService>().AsSingle().NonLazy();
