@@ -10,18 +10,18 @@ namespace _Asteroids.CodeBase.UI
     {
         private readonly LoseView _view;
         private readonly Starship _starship;
-        private readonly GameSessionService _gameSessionService;
+        private readonly CurrentRunService _currentRunService;
         private readonly ISceneLoadService _sceneLoadService;
 
         public LosePresenter(
             LoseView view,
             Starship starship,
-            GameSessionService gameSessionService,
-            ISceneLoadService sceneLoadService)
+            CurrentRunService currentRunService,
+            ISceneLoadService sceneLoadService,
         {
             _view = view;
             _starship = starship;
-            _gameSessionService = gameSessionService;
+            _currentRunService = currentRunService;
             _sceneLoadService = sceneLoadService;
         }
 
@@ -46,7 +46,7 @@ namespace _Asteroids.CodeBase.UI
 
         private void OnStarshipDestroyed()
         {
-            _view.UpdateScore(_gameSessionService.Score);
+            _view.UpdateScore(_currentRunService.Score);
             _view.Show();
         }
 
