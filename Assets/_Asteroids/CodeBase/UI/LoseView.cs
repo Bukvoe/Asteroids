@@ -2,7 +2,6 @@ using System;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace _Asteroids.CodeBase.UI

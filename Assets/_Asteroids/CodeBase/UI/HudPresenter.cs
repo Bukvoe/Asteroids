@@ -13,7 +13,10 @@ namespace _Asteroids.CodeBase.UI
         private readonly Starship _starship;
         private readonly GameSessionService _gameSessionService;
 
-        public HudPresenter(HudView hudView, Starship starship, GameSessionService gameSessionService)
+        public HudPresenter(
+            HudView hudView,
+            Starship starship,
+            GameSessionService gameSessionService)
         {
             _hudView = hudView;
             _starship = starship;
