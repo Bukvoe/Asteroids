@@ -28,7 +28,6 @@ namespace _Asteroids.CodeBase.Infrastructure
         [SerializeField, Required] private Asteroid _asteroidPrefab;
         [SerializeField, Required] private Ufo _ufoPrefab;
 
-        [SerializeField, Required] private Transform _uiRoot;
         [SerializeField, Required] private HudView _hudViewPrefab;
         [SerializeField, Required] private LoseView _loseViewPrefab;
 
@@ -52,9 +51,9 @@ namespace _Asteroids.CodeBase.Infrastructure
             Container.Bind<Starship>().FromComponentInNewPrefab(_starshipPrefab).AsSingle();
             Container.BindInterfacesTo<InputService>().AsSingle().NonLazy();
 
-            Container.Bind<HudView>().FromComponentInNewPrefab(_hudViewPrefab).UnderTransform(_uiRoot).AsSingle();
+            Container.Bind<HudView>().FromComponentInNewPrefab(_hudViewPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<HudPresenter>().AsSingle();
-            Container.Bind<LoseView>().FromComponentInNewPrefab(_loseViewPrefab).UnderTransform(_uiRoot).AsSingle();
+            Container.Bind<LoseView>().FromComponentInNewPrefab(_loseViewPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<LosePresenter>().AsSingle();
         }
     }
