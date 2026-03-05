@@ -1,4 +1,5 @@
 using System;
+using _Asteroids.CodeBase.Data;
 using _Asteroids.CodeBase.Services;
 using _Asteroids.CodeBase.Services.SceneLoad;
 using Zenject;
@@ -10,18 +11,18 @@ namespace _Asteroids.CodeBase.UI
         private readonly LoseView _view;
         private readonly CurrentRunService _currentRunService;
         private readonly ISceneLoadService _sceneLoadService;
-        private readonly PlayerProgressService _playerProgressService;
+        private readonly PlayerProgress _playerProgress;
 
         public LosePresenter(
             LoseView view,
             CurrentRunService currentRunService,
             ISceneLoadService sceneLoadService,
-            PlayerProgressService playerProgressService)
+            PlayerProgress playerProgress)
         {
             _view = view;
             _currentRunService = currentRunService;
             _sceneLoadService = sceneLoadService;
-            _playerProgressService = playerProgressService;
+            _playerProgress = playerProgress;
         }
 
         public void Initialize()
@@ -42,9 +43,9 @@ namespace _Asteroids.CodeBase.UI
         {
             _view.UpdateScore(_currentRunService.Score);
 
-            _view.UpdateBestScore(_playerProgressService.BestScore);
-            _view.UpdateRuns(_playerProgressService.Runs);
-            _view.UpdateUfoDestroyed(_playerProgressService.UfoDestroyed);
+            _view.UpdateBestScore(_playerProgress.BestScore);
+            _view.UpdateRuns(_playerProgress.Runs);
+            _view.UpdateUfoDestroyed(_playerProgress.UfoDestroyed);
 
             _view.Show();
         }
