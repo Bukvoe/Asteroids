@@ -4,6 +4,7 @@ using _Asteroids.CodeBase.Data;
 using _Asteroids.CodeBase.Gameplay.Asteroid;
 using _Asteroids.CodeBase.Gameplay.Starship;
 using _Asteroids.CodeBase.Gameplay.Ufo;
+using _Asteroids.CodeBase.Services.Save;
 using Zenject;
 
 namespace _Asteroids.CodeBase.Services
@@ -16,8 +17,9 @@ namespace _Asteroids.CodeBase.Services
         private readonly AsteroidService _asteroidService;
         private readonly EnemyService _enemyService;
         private readonly ScoreConfig _scoreConfig;
-        private readonly PlayerProgressService _playerProgressService;
         private readonly Starship _starship;
+        private readonly PlayerProgress _playerProgress;
+        private readonly ISaveService _saveService;
         private readonly RunResult _runResult;
 
         public int Score => _runResult.Score;
@@ -26,15 +28,17 @@ namespace _Asteroids.CodeBase.Services
             AsteroidService asteroidService,
             EnemyService enemyService,
             GameConfigService gameConfigService,
-            PlayerProgressService playerProgressService,
-            Starship starship)
+            Starship starship,
+            PlayerProgress playerProgress,
+            ISaveService saveService)
         {
             _runResult = new RunResult();
 
             _asteroidService = asteroidService;
             _enemyService = enemyService;
-            _playerProgressService = playerProgressService;
             _starship = starship;
+            _playerProgress = playerProgress;
+            _saveService = saveService;
 
             _scoreConfig = gameConfigService.ScoreConfig;
         }
@@ -83,8 +87,21 @@ namespace _Asteroids.CodeBase.Services
 
         private void OnStarshipDestroyed()
         {
-            _playerProgressService.UpdateProgress(_runResult);
+            UpdateProgress(_runResult);
             RunEnded?.Invoke();
+        }
+
+        private void UpdateProgress(RunResult runResult)
+        {
+            if (runResult.Score > _playerProgress.BestScore)
+            {
+                _playerProgress.BestScore = runResult.Score;
+            }
+
+            _playerProgress.UfoDestroyed += runResult.UfoDestroyed;
+            _playerProgress.Runs++;
+
+            _saveService.Save(_playerProgress);
         }
 
         private void AddScore(int score)
