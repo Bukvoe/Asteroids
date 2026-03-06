@@ -20,9 +20,9 @@ namespace _Asteroids.CodeBase.Services
         private readonly Starship _starship;
         private readonly PlayerProgress _playerProgress;
         private readonly ISaveService _saveService;
-        private readonly RunResult _runResult;
+        private readonly RunStats _runStats;
 
-        public int Score => _runResult.Score;
+        public int Score => _runStats.Score;
 
         public CurrentRunService(
             AsteroidService asteroidService,
@@ -32,7 +32,7 @@ namespace _Asteroids.CodeBase.Services
             PlayerProgress playerProgress,
             ISaveService saveService)
         {
-            _runResult = new RunResult();
+            _runStats = new RunStats();
 
             _asteroidService = asteroidService;
             _enemyService = enemyService;
@@ -81,7 +81,7 @@ namespace _Asteroids.CodeBase.Services
 
         private void OnUfoDestroyed(Ufo ufo)
         {
-            _runResult.UfoDestroyed++;
+            _runStats.UfosDestroyed++;
             AddScore(_scoreConfig.UfoScore);
         }
 
@@ -91,14 +91,14 @@ namespace _Asteroids.CodeBase.Services
             RunEnded?.Invoke();
         }
 
-        private void UpdateProgress(RunResult runResult)
+        private void UpdateProgress(RunStats runStats)
         {
-            if (runResult.Score > _playerProgress.BestScore)
+            if (runStats.Score > _playerProgress.BestScore)
             {
-                _playerProgress.BestScore = runResult.Score;
+                _playerProgress.BestScore = runStats.Score;
             }
 
-            _playerProgress.UfoDestroyed += runResult.UfoDestroyed;
+            _playerProgress.UfoDestroyed += runStats.UfosDestroyed;
             _playerProgress.Runs++;
 
             _saveService.Save(_playerProgress);
@@ -106,7 +106,7 @@ namespace _Asteroids.CodeBase.Services
 
         private void AddScore(int score)
         {
-            _runResult.Score += score;
+            _runStats.Score += score;
             ScoreChanged?.Invoke();
         }
     }
