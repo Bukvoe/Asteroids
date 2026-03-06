@@ -4,6 +4,8 @@ using _Asteroids.CodeBase.Data;
 using _Asteroids.CodeBase.Gameplay.Asteroid;
 using _Asteroids.CodeBase.Gameplay.Starship;
 using _Asteroids.CodeBase.Gameplay.Ufo;
+using _Asteroids.CodeBase.Gameplay.Weapons;
+using _Asteroids.CodeBase.Services.Analytics;
 using _Asteroids.CodeBase.Services.Save;
 using Zenject;
 
@@ -20,9 +22,10 @@ namespace _Asteroids.CodeBase.Services
         private readonly Starship _starship;
         private readonly PlayerProgress _playerProgress;
         private readonly ISaveService _saveService;
-        private readonly RunResult _runResult;
+        private readonly RunStats _runStats;
+        private readonly IAnalyticsService _analyticsService;
 
-        public int Score => _runResult.Score;
+        public int Score => _runStats.Score;
 
         public CurrentRunService(
             AsteroidService asteroidService,
@@ -30,15 +33,17 @@ namespace _Asteroids.CodeBase.Services
             GameConfigService gameConfigService,
             Starship starship,
             PlayerProgress playerProgress,
-            ISaveService saveService)
+            ISaveService saveService,
+            IAnalyticsService analyticsService)
         {
-            _runResult = new RunResult();
+            _runStats = new RunStats();
 
             _asteroidService = asteroidService;
             _enemyService = enemyService;
             _starship = starship;
             _playerProgress = playerProgress;
             _saveService = saveService;
+            _analyticsService = analyticsService;
 
             _scoreConfig = gameConfigService.ScoreConfig;
         }
@@ -48,6 +53,9 @@ namespace _Asteroids.CodeBase.Services
             _asteroidService.AsteroidDestroyed += OnAsteroidDestroyed;
             _enemyService.UfoDestroyed += OnUfoDestroyed;
             _starship.OnDestroyed += OnStarshipDestroyed;
+            _starship.Weapon.WeaponFired += OnWeaponFired;
+
+            _analyticsService.TrackRunStarted();
         }
 
         public void Dispose()
@@ -55,10 +63,13 @@ namespace _Asteroids.CodeBase.Services
             _asteroidService.AsteroidDestroyed -= OnAsteroidDestroyed;
             _enemyService.UfoDestroyed -= OnUfoDestroyed;
             _starship.OnDestroyed -= OnStarshipDestroyed;
+            _starship.Weapon.WeaponFired -= OnWeaponFired;
         }
 
         private void OnAsteroidDestroyed(Asteroid asteroid)
         {
+            _runStats.AsteroidsDestroyed++;
+
             switch (asteroid.Size)
             {
                 case AsteroidSize.Small:
@@ -79,26 +90,41 @@ namespace _Asteroids.CodeBase.Services
             }
         }
 
+        private void OnWeaponFired(IWeapon weapon)
+        {
+            if (weapon is LaserWeapon)
+            {
+                _runStats.LasersFired++;
+                _analyticsService.TrackLaserFired();
+            }
+            else
+            {
+                _runStats.BulletsFired++;
+            }
+        }
+
         private void OnUfoDestroyed(Ufo ufo)
         {
-            _runResult.UfoDestroyed++;
+            _runStats.UfosDestroyed++;
             AddScore(_scoreConfig.UfoScore);
         }
 
         private void OnStarshipDestroyed()
         {
-            UpdateProgress(_runResult);
+            _analyticsService.TrackRunEnded(_runStats);
+
+            UpdateProgress(_runStats);
             RunEnded?.Invoke();
         }
 
-        private void UpdateProgress(RunResult runResult)
+        private void UpdateProgress(RunStats runStats)
         {
-            if (runResult.Score > _playerProgress.BestScore)
+            if (runStats.Score > _playerProgress.BestScore)
             {
-                _playerProgress.BestScore = runResult.Score;
+                _playerProgress.BestScore = runStats.Score;
             }
 
-            _playerProgress.UfoDestroyed += runResult.UfoDestroyed;
+            _playerProgress.UfoDestroyed += runStats.UfosDestroyed;
             _playerProgress.Runs++;
 
             _saveService.Save(_playerProgress);
@@ -106,7 +132,7 @@ namespace _Asteroids.CodeBase.Services
 
         private void AddScore(int score)
         {
-            _runResult.Score += score;
+            _runStats.Score += score;
             ScoreChanged?.Invoke();
         }
     }

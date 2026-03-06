@@ -1,4 +1,5 @@
 using _Asteroids.CodeBase.Data;
+using _Asteroids.CodeBase.Services.Analytics;
 using _Asteroids.CodeBase.Services.Save;
 using _Asteroids.CodeBase.Services.SceneLoad;
 using Zenject;
@@ -11,6 +12,7 @@ namespace _Asteroids.CodeBase.Infrastructure
         {
             Container.Bind<ISaveService>().To<PlayerPrefsSaveService>().AsSingle();
             Container.Bind<ISceneLoadService>().To<SceneLoadService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<FirebaseAnalyticsService>().AsSingle().NonLazy();
 
             Container.Bind<PlayerProgress>().FromMethod(ctx =>
             {
