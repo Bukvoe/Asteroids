@@ -1,3 +1,4 @@
+using System;
 using _Asteroids.CodeBase.Factories.Payloads;
 using _Asteroids.CodeBase.Gameplay.Common;
 using _Asteroids.CodeBase.Gameplay.Weapons;
@@ -10,6 +11,8 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
 {
     public class StarshipWeapon : MonoBehaviour
     {
+        public event Action<IWeapon> WeaponFired;
+
         [SerializeField, Required] private Transform _weaponsRoot;
 
         public IWeapon Primary { get; private set; }
@@ -62,10 +65,14 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
 
         private void Shoot(IWeapon weapon)
         {
-            if (weapon != null && weapon.CanShoot())
+            if (weapon == null || !weapon.CanShoot())
             {
-                weapon.Shoot(new ShootIntent(_weaponsRoot.position, _weaponsRoot.up, EntityTag.Player));
+                return;
             }
+
+            weapon.Shoot(new ShootIntent(_weaponsRoot.position, _weaponsRoot.up, EntityTag.Player));
+
+            WeaponFired?.Invoke(weapon);
         }
 
         private void Release(IWeapon weapon)

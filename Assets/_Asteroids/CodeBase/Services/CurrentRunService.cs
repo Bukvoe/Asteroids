@@ -4,6 +4,8 @@ using _Asteroids.CodeBase.Data;
 using _Asteroids.CodeBase.Gameplay.Asteroid;
 using _Asteroids.CodeBase.Gameplay.Starship;
 using _Asteroids.CodeBase.Gameplay.Ufo;
+using _Asteroids.CodeBase.Gameplay.Weapons;
+using _Asteroids.CodeBase.Services.Analytics;
 using _Asteroids.CodeBase.Services.Save;
 using Zenject;
 
@@ -21,6 +23,7 @@ namespace _Asteroids.CodeBase.Services
         private readonly PlayerProgress _playerProgress;
         private readonly ISaveService _saveService;
         private readonly RunStats _runStats;
+        private readonly IAnalyticsService _analyticsService;
 
         public int Score => _runStats.Score;
 
@@ -30,7 +33,8 @@ namespace _Asteroids.CodeBase.Services
             GameConfigService gameConfigService,
             Starship starship,
             PlayerProgress playerProgress,
-            ISaveService saveService)
+            ISaveService saveService,
+            IAnalyticsService analyticsService)
         {
             _runStats = new RunStats();
 
@@ -39,6 +43,7 @@ namespace _Asteroids.CodeBase.Services
             _starship = starship;
             _playerProgress = playerProgress;
             _saveService = saveService;
+            _analyticsService = analyticsService;
 
             _scoreConfig = gameConfigService.ScoreConfig;
         }
@@ -48,6 +53,9 @@ namespace _Asteroids.CodeBase.Services
             _asteroidService.AsteroidDestroyed += OnAsteroidDestroyed;
             _enemyService.UfoDestroyed += OnUfoDestroyed;
             _starship.OnDestroyed += OnStarshipDestroyed;
+            _starship.Weapon.WeaponFired += OnWeaponFired;
+
+            _analyticsService.TrackRunStarted();
         }
 
         public void Dispose()
@@ -55,10 +63,13 @@ namespace _Asteroids.CodeBase.Services
             _asteroidService.AsteroidDestroyed -= OnAsteroidDestroyed;
             _enemyService.UfoDestroyed -= OnUfoDestroyed;
             _starship.OnDestroyed -= OnStarshipDestroyed;
+            _starship.Weapon.WeaponFired -= OnWeaponFired;
         }
 
         private void OnAsteroidDestroyed(Asteroid asteroid)
         {
+            _runStats.AsteroidsDestroyed++;
+
             switch (asteroid.Size)
             {
                 case AsteroidSize.Small:
@@ -79,6 +90,19 @@ namespace _Asteroids.CodeBase.Services
             }
         }
 
+        private void OnWeaponFired(IWeapon weapon)
+        {
+            if (weapon is LaserWeapon)
+            {
+                _runStats.LasersFired++;
+                _analyticsService.TrackLaserFired();
+            }
+            else
+            {
+                _runStats.BulletsFired++;
+            }
+        }
+
         private void OnUfoDestroyed(Ufo ufo)
         {
             _runStats.UfosDestroyed++;
@@ -87,7 +111,9 @@ namespace _Asteroids.CodeBase.Services
 
         private void OnStarshipDestroyed()
         {
-            UpdateProgress(_runResult);
+            _analyticsService.TrackRunEnded(_runStats);
+
+            UpdateProgress(_runStats);
             RunEnded?.Invoke();
         }
 
