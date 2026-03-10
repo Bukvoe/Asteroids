@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using _Asteroids.CodeBase.Factories;
 using _Asteroids.CodeBase.Factories.Payloads;
 using _Asteroids.CodeBase.Gameplay.Starship;
 using _Asteroids.CodeBase.Gameplay.Ufo;
@@ -12,7 +13,7 @@ namespace _Asteroids.CodeBase.Services
     {
         public event Action<Ufo> UfoDestroyed;
 
-        private readonly Ufo.Factory _ufoFactory;
+        private readonly GenericFactory<Ufo, UfoSpawnPayload> _ufoFactory;
         private readonly GameMapService _gameMapService;
         private readonly GameConfigService _gameConfigService;
         private readonly Starship _starship;
@@ -24,7 +25,7 @@ namespace _Asteroids.CodeBase.Services
         private float _spawnCooldown;
 
         public EnemyService(
-            Ufo.Factory ufoFactory,
+            GenericFactory<Ufo, UfoSpawnPayload> ufoFactory,
             GameMapService gameMapService,
             GameConfigService gameConfigService,
             Starship starship)

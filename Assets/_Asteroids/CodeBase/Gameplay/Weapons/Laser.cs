@@ -6,7 +6,7 @@ using Zenject;
 
 namespace _Asteroids.CodeBase.Gameplay.Weapons
 {
-    public partial class Laser : MonoBehaviour, IDamageSource
+    public class Laser : MonoBehaviour, IDamageSource
     {
         private const int MAX_LASER_HITS = 10;
 

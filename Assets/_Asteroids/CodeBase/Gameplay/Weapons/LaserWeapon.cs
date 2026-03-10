@@ -1,12 +1,13 @@
+using _Asteroids.CodeBase.Factories;
 using _Asteroids.CodeBase.Factories.Payloads;
 using UnityEngine;
 using Zenject;
 
 namespace _Asteroids.CodeBase.Gameplay.Weapons
 {
-    public partial class LaserWeapon : MonoBehaviour, IWeapon
+    public class LaserWeapon : MonoBehaviour, IWeapon
     {
-        private Laser.Factory _laserFactory;
+        private GenericFactory<Laser, LaserSpawnPayload> _laserFactory;
         private LaserWeaponState _state;
         private float _distance;
         private float _duration;
@@ -16,7 +17,7 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
         public IWeaponState State => _state;
 
         [Inject]
-        public void Construct(LaserWeaponSpawnPayload spawnPayload, Laser.Factory laserFactory)
+        public void Construct(LaserWeaponSpawnPayload spawnPayload, GenericFactory<Laser, LaserSpawnPayload> laserFactory)
         {
             _laserFactory = laserFactory;
             _state = new LaserWeaponState(spawnPayload.MaxCharges, spawnPayload.ChargeCooldown);

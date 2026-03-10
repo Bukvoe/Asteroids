@@ -1,10 +1,12 @@
 using _Asteroids.CodeBase.Configs;
+using _Asteroids.CodeBase.Factories;
 using _Asteroids.CodeBase.Factories.Payloads;
 using _Asteroids.CodeBase.Gameplay.Asteroid;
 using _Asteroids.CodeBase.Gameplay.Starship;
 using _Asteroids.CodeBase.Gameplay.Ufo;
 using _Asteroids.CodeBase.Gameplay.Weapons;
 using _Asteroids.CodeBase.Services;
+using _Asteroids.CodeBase.Services.Asset;
 using _Asteroids.CodeBase.UI;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -33,12 +35,12 @@ namespace _Asteroids.CodeBase.Infrastructure
 
         public override void InstallBindings()
         {
-            Container.BindFactory<BulletWeaponSpawnPayload, BulletWeapon, BulletWeapon.Factory>().FromComponentInNewPrefab(_bulletWeaponPrefab);
-            Container.BindFactory<BulletSpawnPayload, Bullet, Bullet.Factory>().FromComponentInNewPrefab(_bulletPrefab);
-            Container.BindFactory<LaserWeaponSpawnPayload, LaserWeapon, LaserWeapon.Factory>().FromComponentInNewPrefab(_laserWeaponPrefab);
-            Container.BindFactory<LaserSpawnPayload, Laser, Laser.Factory>().FromComponentInNewPrefab(_laserPrefab);
-            Container.BindFactory<AsteroidSpawnPayload, Asteroid, Asteroid.Factory>().FromComponentInNewPrefab(_asteroidPrefab);
-            Container.BindFactory<UfoSpawnPayload, Ufo, Ufo.Factory>().FromComponentInNewPrefab(_ufoPrefab);
+            Container.BindInterfacesAndSelfTo<GenericFactory<BulletWeapon, BulletWeaponSpawnPayload>>().AsSingle().WithArguments(AssetId.BULLET_WEAPON);
+            Container.BindInterfacesAndSelfTo<GenericFactory<Bullet, BulletSpawnPayload>>().AsSingle().WithArguments(AssetId.BULLET);
+            Container.BindInterfacesAndSelfTo<GenericFactory<LaserWeapon, LaserWeaponSpawnPayload>>().AsSingle().WithArguments(AssetId.LASER_WEAPON);
+            Container.BindInterfacesAndSelfTo<GenericFactory<Laser, LaserSpawnPayload>>().AsSingle().WithArguments(AssetId.LASER);
+            Container.BindInterfacesAndSelfTo<GenericFactory<Asteroid, AsteroidSpawnPayload>>().AsSingle().WithArguments(AssetId.ASTEROID);
+            Container.BindInterfacesAndSelfTo<GenericFactory<Ufo, UfoSpawnPayload>>().AsSingle().WithArguments(AssetId.UFO);
 
             Container.Bind<GameConfigService>().AsSingle().WithArguments(_gameConfig);
             Container.Bind<SceneObjectService>().AsSingle().WithArguments(_camera);

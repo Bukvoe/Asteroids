@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using _Asteroids.CodeBase.Factories;
 using _Asteroids.CodeBase.Factories.Payloads;
 using _Asteroids.CodeBase.Gameplay.Asteroid;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace _Asteroids.CodeBase.Services
     {
         public event Action<Asteroid> AsteroidDestroyed;
 
-        private readonly Asteroid.Factory _asteroidFactory;
+        private readonly GenericFactory<Asteroid, AsteroidSpawnPayload> _asteroidFactory;
         private readonly GameMapService _gameMapService;
         private readonly GameConfigService _gameConfigService;
         private readonly RandomService _randomService;
@@ -24,7 +25,7 @@ namespace _Asteroids.CodeBase.Services
         private float _spawnCooldown;
 
         public AsteroidService(
-            Asteroid.Factory asteroidFactory,
+            GenericFactory<Asteroid, AsteroidSpawnPayload> asteroidFactory,
             GameMapService gameMapService,
             GameConfigService gameConfigService,
             RandomService randomService)

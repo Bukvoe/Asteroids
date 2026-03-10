@@ -8,7 +8,7 @@ using Zenject;
 
 namespace _Asteroids.CodeBase.Gameplay.Asteroid
 {
-    public partial class Asteroid : MonoBehaviour
+    public class Asteroid : MonoBehaviour
     {
         public event Action<Asteroid> OnDestroyed;
 

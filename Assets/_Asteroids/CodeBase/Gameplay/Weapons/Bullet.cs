@@ -6,7 +6,7 @@ using Zenject;
 
 namespace _Asteroids.CodeBase.Gameplay.Weapons
 {
-    public partial class Bullet : MonoBehaviour, IDamageSource
+    public class Bullet : MonoBehaviour, IDamageSource
     {
         private const float LIFETIME = 5f;
 
