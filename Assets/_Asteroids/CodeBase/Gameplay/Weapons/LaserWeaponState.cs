@@ -46,14 +46,14 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
 
             _updateTimer += deltaTime;
 
-            if (_updateTimer < ICooldownState.CooldownUpdateInterval)
+            if (_updateTimer < ICooldownState.COOLDOWN_UPDATE_INTERVAL)
             {
                 return;
             }
 
             _updateTimer = 0f;
 
-            CurrentCooldown -= ICooldownState.CooldownUpdateInterval;
+            CurrentCooldown -= ICooldownState.COOLDOWN_UPDATE_INTERVAL;
 
             if (CurrentCooldown > 0f)
             {

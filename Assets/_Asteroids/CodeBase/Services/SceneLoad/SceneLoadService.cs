@@ -5,15 +5,15 @@ namespace _Asteroids.CodeBase.Services.SceneLoad
 {
     public class SceneLoadService : ISceneLoadService
     {
-        private const string BootstrapScene = "BootstrapScene";
-        private const string GameplayScene = "GameplayScene";
+        private const string BOOTSTRAP_SCENE = "BootstrapScene";
+        private const string GAMEPLAY_SCENE = "GameplayScene";
 
         public void LoadScene(GameScene scene)
         {
             var sceneName = scene switch
             {
-                GameScene.Bootstrap => BootstrapScene,
-                GameScene.Gameplay  => GameplayScene,
+                GameScene.Bootstrap => BOOTSTRAP_SCENE,
+                GameScene.Gameplay  => GAMEPLAY_SCENE,
                 _                   => string.Empty,
             };
 

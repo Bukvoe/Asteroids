@@ -36,16 +36,16 @@ namespace _Asteroids.CodeBase.Services
 
         public Vector2 GetSpawnRandomPoint()
         {
-            const float offset = 2f;
+            const float OFFSET = 2f;
 
             var isVertical = _randomService.RandomBool();
 
             var x = isVertical
                 ? Random.Range(-Width, Width)
-                : _randomService.RandomBool() ? -Width - offset : Width + offset;
+                : _randomService.RandomBool() ? -Width - OFFSET : Width + OFFSET;
 
             var y = isVertical
-                ? _randomService.RandomBool() ? -Height - offset : Height + offset
+                ? _randomService.RandomBool() ? -Height - OFFSET : Height + OFFSET
                 : Random.Range(-Height, Height);
 
             return new Vector2(x, y);
