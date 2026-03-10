@@ -6,6 +6,7 @@ namespace _Asteroids.CodeBase.Services.SceneLoad
     public class SceneLoadService : ISceneLoadService
     {
         private const string BOOTSTRAP_SCENE = "BootstrapScene";
+        private const string MAIN_MENU_SCENE = "MainMenuScene";
         private const string GAMEPLAY_SCENE = "GameplayScene";
 
         public void LoadScene(GameScene scene)
@@ -13,6 +14,7 @@ namespace _Asteroids.CodeBase.Services.SceneLoad
             var sceneName = scene switch
             {
                 GameScene.Bootstrap => BOOTSTRAP_SCENE,
+                GameScene.MainMenu  => MAIN_MENU_SCENE,
                 GameScene.Gameplay  => GAMEPLAY_SCENE,
                 _                   => string.Empty,
             };

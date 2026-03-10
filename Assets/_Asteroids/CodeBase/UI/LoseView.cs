@@ -8,6 +8,7 @@ namespace _Asteroids.CodeBase.UI
 {
     public class LoseView : MonoBehaviour
     {
+        public event Action MainMenuRequested;
         public event Action RestartRequested;
 
         [SerializeField, Required] private TextMeshProUGUI _scoreLabel;
@@ -15,14 +16,17 @@ namespace _Asteroids.CodeBase.UI
         [SerializeField, Required] private TextMeshProUGUI _runsLabel;
         [SerializeField, Required] private TextMeshProUGUI _ufoDestroyedLabel;
         [SerializeField, Required] private Button _restartButton;
+        [SerializeField, Required] private Button _mainMenuButton;
 
         private void Start()
         {
+            _mainMenuButton.onClick.AddListener(ToMainMenu);
             _restartButton.onClick.AddListener(RestartScene);
         }
 
         private void OnDestroy()
         {
+            _mainMenuButton.onClick.RemoveAllListeners();
             _restartButton.onClick.RemoveAllListeners();
         }
 
@@ -44,6 +48,11 @@ namespace _Asteroids.CodeBase.UI
         private void RestartScene()
         {
             RestartRequested?.Invoke();
+        }
+
+        private void ToMainMenu()
+        {
+            MainMenuRequested?.Invoke();
         }
 
         public void UpdateBestScore(int bestScore)

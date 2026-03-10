@@ -14,7 +14,7 @@ namespace _Asteroids.CodeBase.Infrastructure
 
         public void Initialize()
         {
-            _sceneLoadService.LoadScene(GameScene.Gameplay);
+            _sceneLoadService.LoadScene(GameScene.MainMenu);
         }
     }
 }

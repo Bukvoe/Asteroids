@@ -28,6 +28,7 @@ namespace _Asteroids.CodeBase.UI
         public void Initialize()
         {
             _currentRunService.RunEnded += OnRunEnded;
+            _view.MainMenuRequested += OnMainMenuRequested;
             _view.RestartRequested += OnRestartRequested;
 
             _view.Hide();
@@ -36,6 +37,7 @@ namespace _Asteroids.CodeBase.UI
         public void Dispose()
         {
             _currentRunService.RunEnded -= OnRunEnded;
+            _view.MainMenuRequested -= OnMainMenuRequested;
             _view.RestartRequested -= OnRestartRequested;
         }
 
@@ -48,6 +50,11 @@ namespace _Asteroids.CodeBase.UI
             _view.UpdateUfoDestroyed(_playerProgress.UfoDestroyed);
 
             _view.Show();
+        }
+
+        private void OnMainMenuRequested()
+        {
+            _sceneLoadService.LoadScene(GameScene.MainMenu);
         }
 
         private void OnRestartRequested()
