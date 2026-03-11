@@ -7,7 +7,7 @@ namespace _Asteroids.CodeBase.Services
 {
     public class InputService : ITickable, IDisposable
     {
-        private readonly Starship _starship;
+        private readonly StarshipService _starshipService;
         private readonly PlayerInput _playerInput;
 
         private readonly InputAction _accelerationAction;
@@ -15,9 +15,9 @@ namespace _Asteroids.CodeBase.Services
         private readonly InputAction _primaryAttackAction;
         private readonly InputAction _secondaryAttackAction;
 
-        public InputService(Starship starship)
+        public InputService(StarshipService starshipService)
         {
-            _starship = starship;
+            _starshipService = starshipService;
             _playerInput = new PlayerInput();
 
             _accelerationAction = _playerInput.Starship.Acceleration;
@@ -31,7 +31,9 @@ namespace _Asteroids.CodeBase.Services
 
         public void Tick()
         {
-            if (_starship == null)
+            var starship = _starshipService.Starship;
+
+            if (starship == null)
             {
                 return;
             }
@@ -39,26 +41,26 @@ namespace _Asteroids.CodeBase.Services
             var isAccelerating = _accelerationAction.IsPressed();
             var rotationValue = _rotationAction.ReadValue<float>();
 
-            _starship.Movement.SetMoveIntent(new MoveIntent(isAccelerating, rotationValue));
+            starship.Movement.SetMoveIntent(new MoveIntent(isAccelerating, rotationValue));
 
             if (_primaryAttackAction.WasPressedThisFrame())
             {
-                _starship.Weapon.ShootPrimary();
+                starship.Weapon.ShootPrimary();
             }
 
             if (_primaryAttackAction.WasReleasedThisFrame())
             {
-                _starship.Weapon.ReleasePrimary();
+                starship.Weapon.ReleasePrimary();
             }
 
             if (_secondaryAttackAction.WasPressedThisFrame())
             {
-                _starship.Weapon.ShootSecondary();
+                starship.Weapon.ShootSecondary();
             }
 
             if (_secondaryAttackAction.WasReleasedThisFrame())
             {
-                _starship.Weapon.ReleaseSecondary();
+                starship.Weapon.ReleaseSecondary();
             }
         }
 

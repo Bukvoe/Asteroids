@@ -23,12 +23,12 @@ namespace _Asteroids.CodeBase.Gameplay.Ufo
         [Inject]
         public void Construct(
             UfoSpawnPayload spawnPayload,
-            Starship.Starship starship,
+            StarshipService starshipService,
             GenericFactory<BulletWeapon, BulletWeaponSpawnPayload> bulletWeaponFactory,
             GameMapService mapBorderService)
         {
-            _movement.Initialize(spawnPayload.Position, starship.transform, spawnPayload.MovementSpeed, mapBorderService);
-            _weapon.Initialize(bulletWeaponFactory, spawnPayload.BulletWeaponCooldown, spawnPayload.BulletSpeed, starship.transform);
+            _movement.Initialize(spawnPayload.Position, starshipService.Starship.transform, spawnPayload.MovementSpeed, mapBorderService);
+            _weapon.Initialize(bulletWeaponFactory, spawnPayload.BulletWeaponCooldown, spawnPayload.BulletSpeed, starshipService.Starship.transform);
         }
 
         private void Start()

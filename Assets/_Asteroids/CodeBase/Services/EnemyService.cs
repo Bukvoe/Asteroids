@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using _Asteroids.CodeBase.Factories;
 using _Asteroids.CodeBase.Factories.Payloads;
-using _Asteroids.CodeBase.Gameplay.Starship;
 using _Asteroids.CodeBase.Gameplay.Ufo;
 using UnityEngine;
 using Zenject;
@@ -16,7 +15,7 @@ namespace _Asteroids.CodeBase.Services
         private readonly GenericFactory<Ufo, UfoSpawnPayload> _ufoFactory;
         private readonly GameMapService _gameMapService;
         private readonly GameConfigService _gameConfigService;
-        private readonly Starship _starship;
+        private readonly StarshipService _starshipService;
 
         private readonly List<Ufo> _spawnedUfos = new();
         private readonly int _maxUfos;
@@ -28,12 +27,12 @@ namespace _Asteroids.CodeBase.Services
             GenericFactory<Ufo, UfoSpawnPayload> ufoFactory,
             GameMapService gameMapService,
             GameConfigService gameConfigService,
-            Starship starship)
+            StarshipService starshipService)
         {
             _ufoFactory = ufoFactory;
             _gameMapService = gameMapService;
             _gameConfigService = gameConfigService;
-            _starship = starship;
+            _starshipService = starshipService;
 
             var enemySpawnConfig = gameConfigService.EnemySpawnConfig;
 
@@ -45,7 +44,7 @@ namespace _Asteroids.CodeBase.Services
         {
             _spawnCooldown = Mathf.Max(_spawnCooldown - Time.deltaTime, 0);
 
-            if (_starship == null)
+            if (_starshipService.Starship == null)
             {
                 return;
             }

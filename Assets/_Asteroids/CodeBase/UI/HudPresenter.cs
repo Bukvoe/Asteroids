@@ -10,40 +10,88 @@ namespace _Asteroids.CodeBase.UI
     public class HudPresenter : IInitializable, IDisposable
     {
         private readonly HudView _hudView;
-        private readonly Starship _starship;
+        private readonly StarshipService _starshipService;
         private readonly CurrentRunService _currentRunService;
+
+        private Starship _starship;
 
         public HudPresenter(
             HudView hudView,
-            Starship starship,
+            StarshipService starshipService,
             CurrentRunService currentRunService)
         {
             _hudView = hudView;
-            _starship = starship;
+            _starshipService = starshipService;
             _currentRunService = currentRunService;
         }
 
         public void Initialize()
         {
-            _starship.Movement.OnPositionChanged += UpdatePosition;
-            _starship.Movement.OnRotationChanged += UpdateAngle;
-            _starship.Movement.OnSpeedChanged += UpdateSpeed;
-            _starship.Weapon.Secondary.State.Changed += UpdateWeaponState;
+            _starshipService.StarshipSpawned += OnStarshipSpawned;
+            _starshipService.StarshipDestroyed += OnStarshipDestroyed;
 
             _currentRunService.ScoreChanged += UpdateScore;
+
+            if (_starshipService.Starship != null)
+            {
+                OnStarshipSpawned();
+            }
+        }
+
+        private void OnStarshipSpawned()
+        {
+            if (_starship != null)
+            {
+                UnsubscribeFromStarship(_starship);
+            }
+
+            _starship = _starshipService.Starship;
+            SubscribeToStarship(_starship);
 
             UpdateWeaponState();
             UpdateScore();
         }
 
+        private void OnStarshipDestroyed()
+        {
+            UnsubscribeFromStarship(_starship);
+            _starship = null;
+        }
+
         public void Dispose()
         {
-            _starship.Movement.OnPositionChanged -= UpdatePosition;
-            _starship.Movement.OnRotationChanged -= UpdateAngle;
-            _starship.Movement.OnSpeedChanged -= UpdateSpeed;
-            _starship.Weapon.Secondary.State.Changed -= UpdateWeaponState;
+            UnsubscribeFromStarship(_starship);
+
+            _starshipService.StarshipSpawned -= OnStarshipSpawned;
+            _starshipService.StarshipDestroyed -= OnStarshipDestroyed;
 
             _currentRunService.ScoreChanged -= UpdateScore;
+        }
+
+        private void SubscribeToStarship(Starship starship)
+        {
+            if (starship == null)
+            {
+                return;
+            }
+
+            starship.Movement.OnPositionChanged += UpdatePosition;
+            starship.Movement.OnRotationChanged += UpdateAngle;
+            starship.Movement.OnSpeedChanged += UpdateSpeed;
+            starship.Weapon.Secondary.State.Changed += UpdateWeaponState;
+        }
+
+        private void UnsubscribeFromStarship(Starship starship)
+        {
+            if (starship == null)
+            {
+                return;
+            }
+
+            starship.Movement.OnPositionChanged -= UpdatePosition;
+            starship.Movement.OnRotationChanged -= UpdateAngle;
+            starship.Movement.OnSpeedChanged -= UpdateSpeed;
+            starship.Weapon.Secondary.State.Changed -= UpdateWeaponState;
         }
 
         private void UpdatePosition(Vector2 position)
@@ -63,6 +111,11 @@ namespace _Asteroids.CodeBase.UI
 
         private void UpdateWeaponState()
         {
+            if (_starship == null)
+            {
+                return;
+            }
+
             var weaponState = _starship.Weapon.Secondary.State;
 
             if (weaponState is IChargesState chargesState)
