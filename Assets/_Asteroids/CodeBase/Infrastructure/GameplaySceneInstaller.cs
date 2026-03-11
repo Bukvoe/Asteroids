@@ -6,7 +6,6 @@ using _Asteroids.CodeBase.Gameplay.Ufo;
 using _Asteroids.CodeBase.Gameplay.Weapons;
 using _Asteroids.CodeBase.Services;
 using _Asteroids.CodeBase.Services.Asset;
-using _Asteroids.CodeBase.UI;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -18,9 +17,6 @@ namespace _Asteroids.CodeBase.Infrastructure
         [SerializeField, Required] private Camera _camera;
         [SerializeField, Required] private GameConfig _gameConfig;
 
-        [SerializeField, Required] private HudView _hudViewPrefab;
-        [SerializeField, Required] private LoseView _loseViewPrefab;
-
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<GenericFactory<BulletWeapon, BulletWeaponSpawnPayload>>().AsSingle().WithArguments(AssetId.BULLET_WEAPON);
@@ -30,6 +26,7 @@ namespace _Asteroids.CodeBase.Infrastructure
             Container.BindInterfacesAndSelfTo<GenericFactory<Asteroid, AsteroidSpawnPayload>>().AsSingle().WithArguments(AssetId.ASTEROID);
             Container.BindInterfacesAndSelfTo<GenericFactory<Ufo, UfoSpawnPayload>>().AsSingle().WithArguments(AssetId.UFO);
             Container.BindInterfacesAndSelfTo<StarshipFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UiFactory>().AsSingle();
 
             Container.Bind<GameConfigService>().AsSingle().WithArguments(_gameConfig);
             Container.Bind<SceneObjectService>().AsSingle().WithArguments(_camera);
