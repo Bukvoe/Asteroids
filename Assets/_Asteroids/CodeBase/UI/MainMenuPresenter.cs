@@ -1,5 +1,6 @@
 ﻿using System;
 using _Asteroids.CodeBase.Services.SceneLoad;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -30,7 +31,7 @@ namespace _Asteroids.CodeBase.UI
 
         private void OnPlayRequested()
         {
-            _sceneLoadService.LoadScene(GameScene.Gameplay);
+            _sceneLoadService.LoadSceneAsync(GameScene.Gameplay).Forget();
         }
 
         private void OnQuitRequested()

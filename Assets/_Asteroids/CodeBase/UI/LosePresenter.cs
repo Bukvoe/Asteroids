@@ -2,6 +2,7 @@ using System;
 using _Asteroids.CodeBase.Data;
 using _Asteroids.CodeBase.Services;
 using _Asteroids.CodeBase.Services.SceneLoad;
+using Cysharp.Threading.Tasks;
 using Zenject;
 
 namespace _Asteroids.CodeBase.UI
@@ -54,12 +55,12 @@ namespace _Asteroids.CodeBase.UI
 
         private void OnMainMenuRequested()
         {
-            _sceneLoadService.LoadScene(GameScene.MainMenu);
+            _sceneLoadService.LoadSceneAsync(GameScene.MainMenu).Forget();
         }
 
         private void OnRestartRequested()
         {
-            _sceneLoadService.ReloadCurrentScene();
+            _sceneLoadService.ReloadCurrentSceneAsync().Forget();
         }
     }
 }

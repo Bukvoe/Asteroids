@@ -25,7 +25,7 @@ namespace _Asteroids.CodeBase.Infrastructure
         {
             await _assetService.InitializeAsync();
 
-            _sceneLoadService.LoadScene(GameScene.MainMenu);
+            await _sceneLoadService.LoadSceneAsync(GameScene.MainMenu);
         }
     }
 }
