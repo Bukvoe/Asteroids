@@ -5,23 +5,23 @@ namespace _Asteroids.CodeBase.Services.Save
 {
     public class PlayerPrefsSaveService : ISaveService
     {
-        private const string PlayerProgressKey = "PlayerProgress";
+        private const string PLAYER_PROGRESS_KEY = "PlayerProgress";
 
         public void Save(PlayerProgress playerProgress)
         {
             var json = JsonUtility.ToJson(playerProgress);
-            PlayerPrefs.SetString(PlayerProgressKey, json);
+            PlayerPrefs.SetString(PLAYER_PROGRESS_KEY, json);
             PlayerPrefs.Save();
         }
 
         public PlayerProgress Load()
         {
-            if (!PlayerPrefs.HasKey(PlayerProgressKey))
+            if (!PlayerPrefs.HasKey(PLAYER_PROGRESS_KEY))
             {
                 return new PlayerProgress(bestScore: 0, runs: 0, ufoDestroyed: 0);
             }
 
-            var json = PlayerPrefs.GetString(PlayerProgressKey);
+            var json = PlayerPrefs.GetString(PLAYER_PROGRESS_KEY);
             return JsonUtility.FromJson<PlayerProgress>(json);
         }
     }

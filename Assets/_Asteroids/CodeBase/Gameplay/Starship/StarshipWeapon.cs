@@ -1,4 +1,5 @@
 using System;
+using _Asteroids.CodeBase.Factories;
 using _Asteroids.CodeBase.Factories.Payloads;
 using _Asteroids.CodeBase.Gameplay.Common;
 using _Asteroids.CodeBase.Gameplay.Weapons;
@@ -21,8 +22,8 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
         [Inject]
         private void Construct(
             GameConfigService gameConfigService,
-            BulletWeapon.Factory bulletWeaponFactory,
-            LaserWeapon.Factory laserWeaponFactory)
+            GenericFactory<BulletWeapon, BulletWeaponSpawnPayload> bulletWeaponFactory,
+            GenericFactory<LaserWeapon, LaserWeaponSpawnPayload> laserWeaponFactory)
         {
             var starshipConfig = gameConfigService.StarshipConfig;
 

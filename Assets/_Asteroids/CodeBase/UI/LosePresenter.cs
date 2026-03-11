@@ -2,6 +2,7 @@ using System;
 using _Asteroids.CodeBase.Data;
 using _Asteroids.CodeBase.Services;
 using _Asteroids.CodeBase.Services.SceneLoad;
+using Cysharp.Threading.Tasks;
 using Zenject;
 
 namespace _Asteroids.CodeBase.UI
@@ -28,6 +29,7 @@ namespace _Asteroids.CodeBase.UI
         public void Initialize()
         {
             _currentRunService.RunEnded += OnRunEnded;
+            _view.MainMenuRequested += OnMainMenuRequested;
             _view.RestartRequested += OnRestartRequested;
 
             _view.Hide();
@@ -36,6 +38,7 @@ namespace _Asteroids.CodeBase.UI
         public void Dispose()
         {
             _currentRunService.RunEnded -= OnRunEnded;
+            _view.MainMenuRequested -= OnMainMenuRequested;
             _view.RestartRequested -= OnRestartRequested;
         }
 
@@ -50,9 +53,14 @@ namespace _Asteroids.CodeBase.UI
             _view.Show();
         }
 
+        private void OnMainMenuRequested()
+        {
+            _sceneLoadService.LoadSceneAsync(GameScene.MainMenu).Forget();
+        }
+
         private void OnRestartRequested()
         {
-            _sceneLoadService.ReloadCurrentScene();
+            _sceneLoadService.ReloadCurrentSceneAsync().Forget();
         }
     }
 }

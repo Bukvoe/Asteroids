@@ -6,11 +6,11 @@ using Zenject;
 
 namespace _Asteroids.CodeBase.Gameplay.Weapons
 {
-    public partial class Laser : MonoBehaviour, IDamageSource
+    public class Laser : MonoBehaviour, IDamageSource
     {
-        private const int MaxLaserHits = 10;
+        private const int MAX_LASER_HITS = 10;
 
-        private readonly RaycastHit2D[] _hits = new RaycastHit2D[MaxLaserHits];
+        private readonly RaycastHit2D[] _hits = new RaycastHit2D[MAX_LASER_HITS];
         private readonly ContactFilter2D _contactFilter = new()
         {
             useTriggers = true,

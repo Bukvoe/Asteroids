@@ -1,3 +1,4 @@
+using _Asteroids.CodeBase.Factories;
 using _Asteroids.CodeBase.Factories.Payloads;
 using _Asteroids.CodeBase.Gameplay.Common;
 using _Asteroids.CodeBase.Gameplay.Weapons;
@@ -13,7 +14,11 @@ namespace _Asteroids.CodeBase.Gameplay.Ufo
         private BulletWeapon _bulletWeapon;
         private Transform _target;
 
-        public void Initialize(BulletWeapon.Factory factory, float cooldown, float bulletSpeed, Transform target)
+        public void Initialize(
+            GenericFactory<BulletWeapon, BulletWeaponSpawnPayload> factory,
+            float cooldown,
+            float bulletSpeed,
+            Transform target)
         {
             var bulletWeaponSpawnPayload = new BulletWeaponSpawnPayload(
                 parent: _weaponsRoot,

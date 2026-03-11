@@ -1,9 +1,11 @@
+using Cysharp.Threading.Tasks;
+
 namespace _Asteroids.CodeBase.Services.SceneLoad
 {
     public interface ISceneLoadService
     {
-        public void LoadScene(GameScene scene);
+        public UniTask LoadSceneAsync(GameScene scene);
 
-        public void ReloadCurrentScene();
+        public UniTask ReloadCurrentSceneAsync();
     }
 }

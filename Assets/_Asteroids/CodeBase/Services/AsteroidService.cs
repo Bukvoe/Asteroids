@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using _Asteroids.CodeBase.Factories;
 using _Asteroids.CodeBase.Factories.Payloads;
 using _Asteroids.CodeBase.Gameplay.Asteroid;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace _Asteroids.CodeBase.Services
     {
         public event Action<Asteroid> AsteroidDestroyed;
 
-        private readonly Asteroid.Factory _asteroidFactory;
+        private readonly GenericFactory<Asteroid, AsteroidSpawnPayload> _asteroidFactory;
         private readonly GameMapService _gameMapService;
         private readonly GameConfigService _gameConfigService;
         private readonly RandomService _randomService;
@@ -21,10 +22,11 @@ namespace _Asteroids.CodeBase.Services
         private readonly int _maxAsteroids;
         private readonly float _maxSpawnCooldown;
 
+        private bool _canSpawn;
         private float _spawnCooldown;
 
         public AsteroidService(
-            Asteroid.Factory asteroidFactory,
+            GenericFactory<Asteroid, AsteroidSpawnPayload> asteroidFactory,
             GameMapService gameMapService,
             GameConfigService gameConfigService,
             RandomService randomService)
@@ -43,6 +45,11 @@ namespace _Asteroids.CodeBase.Services
 
         public void Tick()
         {
+            if (!_canSpawn)
+            {
+                return;
+            }
+
             _spawnCooldown = Mathf.Max(_spawnCooldown - Time.deltaTime, 0);
 
             if (_spawnCooldown <= 0f && CountAsteroidsBySize(_asteroidToSpawn) < _maxAsteroids)
@@ -50,6 +57,11 @@ namespace _Asteroids.CodeBase.Services
                 SpawnAsteroid(_asteroidToSpawn, _gameMapService.GetSpawnRandomPoint());
                 _spawnCooldown += _maxSpawnCooldown;
             }
+        }
+
+        public void StartSpawning()
+        {
+            _canSpawn = true;
         }
 
         private void SpawnAsteroid(AsteroidSize size, Vector2 spawnPosition)

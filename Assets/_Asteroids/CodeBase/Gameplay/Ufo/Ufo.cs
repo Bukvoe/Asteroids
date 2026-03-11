@@ -1,4 +1,5 @@
 using System;
+using _Asteroids.CodeBase.Factories;
 using _Asteroids.CodeBase.Factories.Payloads;
 using _Asteroids.CodeBase.Gameplay.Common;
 using _Asteroids.CodeBase.Gameplay.Weapons;
@@ -9,7 +10,7 @@ using Zenject;
 
 namespace _Asteroids.CodeBase.Gameplay.Ufo
 {
-    public partial class Ufo : MonoBehaviour
+    public class Ufo : MonoBehaviour
     {
         public event Action<Ufo> OnDestroyed;
 
@@ -22,12 +23,12 @@ namespace _Asteroids.CodeBase.Gameplay.Ufo
         [Inject]
         public void Construct(
             UfoSpawnPayload spawnPayload,
-            Starship.Starship starship,
-            BulletWeapon.Factory bulletWeaponFactory,
+            StarshipService starshipService,
+            GenericFactory<BulletWeapon, BulletWeaponSpawnPayload> bulletWeaponFactory,
             GameMapService mapBorderService)
         {
-            _movement.Initialize(spawnPayload.Position, starship.transform, spawnPayload.MovementSpeed, mapBorderService);
-            _weapon.Initialize(bulletWeaponFactory, spawnPayload.BulletWeaponCooldown, spawnPayload.BulletSpeed, starship.transform);
+            _movement.Initialize(spawnPayload.Position, starshipService.Starship.transform, spawnPayload.MovementSpeed, mapBorderService);
+            _weapon.Initialize(bulletWeaponFactory, spawnPayload.BulletWeaponCooldown, spawnPayload.BulletSpeed, starshipService.Starship.transform);
         }
 
         private void Start()

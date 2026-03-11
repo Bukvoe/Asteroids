@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using _Asteroids.CodeBase.Factories;
 using _Asteroids.CodeBase.Factories.Payloads;
-using _Asteroids.CodeBase.Gameplay.Starship;
 using _Asteroids.CodeBase.Gameplay.Ufo;
 using UnityEngine;
 using Zenject;
@@ -12,27 +12,28 @@ namespace _Asteroids.CodeBase.Services
     {
         public event Action<Ufo> UfoDestroyed;
 
-        private readonly Ufo.Factory _ufoFactory;
+        private readonly GenericFactory<Ufo, UfoSpawnPayload> _ufoFactory;
         private readonly GameMapService _gameMapService;
         private readonly GameConfigService _gameConfigService;
-        private readonly Starship _starship;
+        private readonly StarshipService _starshipService;
 
         private readonly List<Ufo> _spawnedUfos = new();
         private readonly int _maxUfos;
         private readonly float _maxSpawnCooldown;
 
+        private bool _canSpawn;
         private float _spawnCooldown;
 
         public EnemyService(
-            Ufo.Factory ufoFactory,
+            GenericFactory<Ufo, UfoSpawnPayload> ufoFactory,
             GameMapService gameMapService,
             GameConfigService gameConfigService,
-            Starship starship)
+            StarshipService starshipService)
         {
             _ufoFactory = ufoFactory;
             _gameMapService = gameMapService;
             _gameConfigService = gameConfigService;
-            _starship = starship;
+            _starshipService = starshipService;
 
             var enemySpawnConfig = gameConfigService.EnemySpawnConfig;
 
@@ -42,9 +43,14 @@ namespace _Asteroids.CodeBase.Services
 
         public void Tick()
         {
+            if (!_canSpawn)
+            {
+                return;
+            }
+
             _spawnCooldown = Mathf.Max(_spawnCooldown - Time.deltaTime, 0);
 
-            if (_starship == null)
+            if (_starshipService.Starship == null)
             {
                 return;
             }
@@ -54,6 +60,11 @@ namespace _Asteroids.CodeBase.Services
                 SpawnUfo(_gameMapService.GetSpawnRandomPoint());
                 _spawnCooldown = _maxSpawnCooldown;
             }
+        }
+
+        public void StartSpawning()
+        {
+            _canSpawn = true;
         }
 
         private void SpawnUfo(Vector2 spawnPosition)

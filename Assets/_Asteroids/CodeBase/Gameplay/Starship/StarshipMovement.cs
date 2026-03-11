@@ -8,7 +8,7 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
 {
     public class StarshipMovement : MonoBehaviour
     {
-        private const float MinTimeToMaxSpeed = 0.01f;
+        private const float MIN_TIME_TO_MAX_SPEED = 0.01f;
         public event Action<Vector2> OnPositionChanged;
         public event Action<float> OnRotationChanged;
         public event Action<float> OnSpeedChanged;
@@ -18,7 +18,7 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
         [SerializeField, SuffixLabel("unit/sec")]
         private float _maxSpeed;
 
-        [SerializeField, MinValue(MinTimeToMaxSpeed), SuffixLabel("sec")]
+        [SerializeField, MinValue(MIN_TIME_TO_MAX_SPEED), SuffixLabel("sec")]
         private float _timeToMaxSpeed;
 
         [SerializeField] private AnimationCurve _speedCurve;

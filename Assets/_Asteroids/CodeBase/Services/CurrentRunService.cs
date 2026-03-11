@@ -2,7 +2,6 @@ using System;
 using _Asteroids.CodeBase.Configs;
 using _Asteroids.CodeBase.Data;
 using _Asteroids.CodeBase.Gameplay.Asteroid;
-using _Asteroids.CodeBase.Gameplay.Starship;
 using _Asteroids.CodeBase.Gameplay.Ufo;
 using _Asteroids.CodeBase.Gameplay.Weapons;
 using _Asteroids.CodeBase.Services.Analytics;
@@ -19,7 +18,7 @@ namespace _Asteroids.CodeBase.Services
         private readonly AsteroidService _asteroidService;
         private readonly EnemyService _enemyService;
         private readonly ScoreConfig _scoreConfig;
-        private readonly Starship _starship;
+        private readonly StarshipService _starshipService;
         private readonly PlayerProgress _playerProgress;
         private readonly ISaveService _saveService;
         private readonly RunStats _runStats;
@@ -31,7 +30,7 @@ namespace _Asteroids.CodeBase.Services
             AsteroidService asteroidService,
             EnemyService enemyService,
             GameConfigService gameConfigService,
-            Starship starship,
+            StarshipService starshipService,
             PlayerProgress playerProgress,
             ISaveService saveService,
             IAnalyticsService analyticsService)
@@ -40,7 +39,7 @@ namespace _Asteroids.CodeBase.Services
 
             _asteroidService = asteroidService;
             _enemyService = enemyService;
-            _starship = starship;
+            _starshipService = starshipService;
             _playerProgress = playerProgress;
             _saveService = saveService;
             _analyticsService = analyticsService;
@@ -52,18 +51,25 @@ namespace _Asteroids.CodeBase.Services
         {
             _asteroidService.AsteroidDestroyed += OnAsteroidDestroyed;
             _enemyService.UfoDestroyed += OnUfoDestroyed;
-            _starship.OnDestroyed += OnStarshipDestroyed;
-            _starship.Weapon.WeaponFired += OnWeaponFired;
+            _starshipService.StarshipDestroyed += OnStarshipDestroyed;
+            _starshipService.WeaponFired += OnWeaponFired;
 
+        }
+
+        public void StartRun()
+        {
             _analyticsService.TrackRunStarted();
+
+            _asteroidService.StartSpawning();
+            _enemyService.StartSpawning();
         }
 
         public void Dispose()
         {
             _asteroidService.AsteroidDestroyed -= OnAsteroidDestroyed;
             _enemyService.UfoDestroyed -= OnUfoDestroyed;
-            _starship.OnDestroyed -= OnStarshipDestroyed;
-            _starship.Weapon.WeaponFired -= OnWeaponFired;
+            _starshipService.StarshipDestroyed -= OnStarshipDestroyed;
+            _starshipService.WeaponFired -= OnWeaponFired;
         }
 
         private void OnAsteroidDestroyed(Asteroid asteroid)

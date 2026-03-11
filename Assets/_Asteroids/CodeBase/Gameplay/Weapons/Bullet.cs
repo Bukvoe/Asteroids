@@ -6,9 +6,9 @@ using Zenject;
 
 namespace _Asteroids.CodeBase.Gameplay.Weapons
 {
-    public partial class Bullet : MonoBehaviour, IDamageSource
+    public class Bullet : MonoBehaviour, IDamageSource
     {
-        private const float Lifetime = 5f;
+        private const float LIFETIME = 5f;
 
         [SerializeField, Required] private Rigidbody2D _rigidbody;
         [SerializeField, Required] private Collider2D _collider;
@@ -28,7 +28,7 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
 
         private void Start()
         {
-            Destroy(gameObject, Lifetime);
+            Destroy(gameObject, LIFETIME);
         }
 
         private void FixedUpdate()

@@ -1,19 +1,20 @@
+using _Asteroids.CodeBase.Factories;
 using _Asteroids.CodeBase.Factories.Payloads;
 using UnityEngine;
 using Zenject;
 
 namespace _Asteroids.CodeBase.Gameplay.Weapons
 {
-    public partial class BulletWeapon : MonoBehaviour, IWeapon
+    public class BulletWeapon : MonoBehaviour, IWeapon
     {
         private BulletWeaponState _state;
-        private Bullet.Factory _bulletFactory;
+        private GenericFactory<Bullet, BulletSpawnPayload> _bulletFactory;
         private float _bulletSpeed;
 
         public IWeaponState State => _state;
 
         [Inject]
-        public void Construct(BulletWeaponSpawnPayload spawnPayload, Bullet.Factory bulletFactory)
+        public void Construct(BulletWeaponSpawnPayload spawnPayload, GenericFactory<Bullet, BulletSpawnPayload> bulletFactory)
         {
             _state = new BulletWeaponState(spawnPayload.Cooldown);
             _bulletFactory = bulletFactory;
