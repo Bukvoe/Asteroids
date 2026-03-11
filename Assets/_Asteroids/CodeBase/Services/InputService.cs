@@ -26,7 +26,16 @@ namespace _Asteroids.CodeBase.Services
             _secondaryAttackAction = _playerInput.Starship.SecondaryAttack;
 
             _playerInput.Enable();
+        }
+
+        public void ActivateStarshipInput()
+        {
             _playerInput.Starship.Enable();
+        }
+
+        public void DeactivateStarshipInput()
+        {
+            _playerInput.Starship.Disable();
         }
 
         public void Tick()

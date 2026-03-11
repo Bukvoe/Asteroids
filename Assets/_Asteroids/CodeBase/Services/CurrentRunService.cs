@@ -54,7 +54,14 @@ namespace _Asteroids.CodeBase.Services
             _starshipService.StarshipDestroyed += OnStarshipDestroyed;
             _starshipService.WeaponFired += OnWeaponFired;
 
+        }
+
+        public void StartRun()
+        {
             _analyticsService.TrackRunStarted();
+
+            _asteroidService.StartSpawning();
+            _enemyService.StartSpawning();
         }
 
         public void Dispose()

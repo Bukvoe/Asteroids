@@ -21,6 +21,7 @@ namespace _Asteroids.CodeBase.Services
         private readonly int _maxUfos;
         private readonly float _maxSpawnCooldown;
 
+        private bool _canSpawn;
         private float _spawnCooldown;
 
         public EnemyService(
@@ -42,6 +43,11 @@ namespace _Asteroids.CodeBase.Services
 
         public void Tick()
         {
+            if (!_canSpawn)
+            {
+                return;
+            }
+
             _spawnCooldown = Mathf.Max(_spawnCooldown - Time.deltaTime, 0);
 
             if (_starshipService.Starship == null)
@@ -54,6 +60,11 @@ namespace _Asteroids.CodeBase.Services
                 SpawnUfo(_gameMapService.GetSpawnRandomPoint());
                 _spawnCooldown = _maxSpawnCooldown;
             }
+        }
+
+        public void StartSpawning()
+        {
+            _canSpawn = true;
         }
 
         private void SpawnUfo(Vector2 spawnPosition)

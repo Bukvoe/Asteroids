@@ -32,17 +32,15 @@ namespace _Asteroids.CodeBase.Infrastructure
             Container.Bind<SceneObjectService>().AsSingle().WithArguments(_camera);
             Container.Bind<RandomService>().AsTransient();
             Container.Bind<GameMapService>().AsSingle();
+            Container.Bind<StarshipService>().AsSingle();
+
             Container.BindInterfacesAndSelfTo<AsteroidService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<EnemyService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<CurrentRunService>().AsSingle().NonLazy();
-            Container.Bind<StarshipService>().AsSingle();
 
-            Container.BindInterfacesTo<InputService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<InputService>().AsSingle().NonLazy();
 
-            Container.Bind<HudView>().FromComponentInNewPrefab(_hudViewPrefab).AsSingle();
-            Container.BindInterfacesAndSelfTo<HudPresenter>().AsSingle();
-            Container.Bind<LoseView>().FromComponentInNewPrefab(_loseViewPrefab).AsSingle();
-            Container.BindInterfacesAndSelfTo<LosePresenter>().AsSingle();
+            Container.BindInterfacesTo<GameplaySceneEntryPoint>().AsSingle().NonLazy();
         }
     }
 }

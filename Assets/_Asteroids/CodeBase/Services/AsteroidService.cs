@@ -22,6 +22,7 @@ namespace _Asteroids.CodeBase.Services
         private readonly int _maxAsteroids;
         private readonly float _maxSpawnCooldown;
 
+        private bool _canSpawn;
         private float _spawnCooldown;
 
         public AsteroidService(
@@ -44,6 +45,11 @@ namespace _Asteroids.CodeBase.Services
 
         public void Tick()
         {
+            if (!_canSpawn)
+            {
+                return;
+            }
+
             _spawnCooldown = Mathf.Max(_spawnCooldown - Time.deltaTime, 0);
 
             if (_spawnCooldown <= 0f && CountAsteroidsBySize(_asteroidToSpawn) < _maxAsteroids)
@@ -51,6 +57,11 @@ namespace _Asteroids.CodeBase.Services
                 SpawnAsteroid(_asteroidToSpawn, _gameMapService.GetSpawnRandomPoint());
                 _spawnCooldown += _maxSpawnCooldown;
             }
+        }
+
+        public void StartSpawning()
+        {
+            _canSpawn = true;
         }
 
         private void SpawnAsteroid(AsteroidSize size, Vector2 spawnPosition)
