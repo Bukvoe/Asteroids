@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/_Asteroids/Content/Scenes/BootstrapScene.unity
     guid: 9f262ae30226c534db328dbe048e2dd2
   - enabled: 1
+    path: Assets/_Asteroids/Content/Scenes/MainMenuScene.unity
+    guid: 788e0fc183535ce428486abfac47961b
+  - enabled: 0
     path: Assets/_Asteroids/Content/Scenes/GameplayScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   m_configObjects:
