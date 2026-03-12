@@ -14,7 +14,7 @@ namespace _Asteroids.CodeBase.Infrastructure
             Container.Bind<IAssetService>().To<AddressablesAssetService>().AsSingle();
             Container.Bind<ISaveService>().To<PlayerPrefsSaveService>().AsSingle();
             Container.Bind<ISceneLoadService>().To<SceneLoadService>().AsSingle();
-            Container.BindInterfacesAndSelfTo<FirebaseAnalyticsService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<FirebaseAnalyticsService>().AsSingle();
 
             Container.Bind<PlayerProgress>().FromMethod(ctx =>
             {
@@ -22,7 +22,7 @@ namespace _Asteroids.CodeBase.Infrastructure
                 return saveService.Load();
             }).AsSingle();
 
-            Container.BindInterfacesTo<EntryPoint>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<EntryPoint>().AsSingle();
         }
     }
 }

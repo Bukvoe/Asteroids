@@ -34,13 +34,13 @@ namespace _Asteroids.CodeBase.Infrastructure
             Container.Bind<GameMapService>().AsSingle();
             Container.Bind<StarshipService>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<AsteroidService>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<EnemyService>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<CurrentRunService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<AsteroidService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemyService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CurrentRunService>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<InputService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
 
-            Container.BindInterfacesTo<GameplaySceneEntryPoint>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<GameplaySceneEntryPoint>().AsSingle();
         }
     }
 }
