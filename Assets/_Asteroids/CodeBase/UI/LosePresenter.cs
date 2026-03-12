@@ -31,6 +31,7 @@ namespace _Asteroids.CodeBase.UI
             _currentRunService.RunEnded += OnRunEnded;
             _view.MainMenuRequested += OnMainMenuRequested;
             _view.RestartRequested += OnRestartRequested;
+            _view.ReviveRequested += OnReviveRequested;
 
             _view.Hide();
         }
@@ -40,6 +41,7 @@ namespace _Asteroids.CodeBase.UI
             _currentRunService.RunEnded -= OnRunEnded;
             _view.MainMenuRequested -= OnMainMenuRequested;
             _view.RestartRequested -= OnRestartRequested;
+            _view.ReviveRequested -= OnReviveRequested;
         }
 
         private void OnRunEnded()
@@ -61,6 +63,10 @@ namespace _Asteroids.CodeBase.UI
         private void OnRestartRequested()
         {
             _sceneLoadService.ReloadCurrentSceneAsync().Forget();
+        }
+
+        private void OnReviveRequested()
+        {
         }
     }
 }

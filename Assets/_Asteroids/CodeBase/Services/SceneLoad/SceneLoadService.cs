@@ -53,7 +53,9 @@ namespace _Asteroids.CodeBase.Services.SceneLoad
                 return;
             }
 
-            if (_loadedAddressableScenes.TryGetValue(sceneName, out var sceneInstance))
+            var currentScene = SceneManager.GetActiveScene().name;
+
+            if (_loadedAddressableScenes.TryGetValue(currentScene, out var sceneInstance))
             {
                 await Addressables.UnloadSceneAsync(sceneInstance);
 
