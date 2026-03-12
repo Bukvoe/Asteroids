@@ -24,7 +24,7 @@ namespace _Asteroids.CodeBase.Gameplay.Ufo
         public void Construct(
             UfoSpawnPayload spawnPayload,
             StarshipService starshipService,
-            GenericFactory<BulletWeapon, BulletWeaponSpawnPayload> bulletWeaponFactory,
+            MonoFactory<BulletWeapon, BulletWeaponSpawnPayload> bulletWeaponFactory,
             GameMapService mapBorderService)
         {
             _movement.Initialize(spawnPayload.Position, starshipService.Starship.transform, spawnPayload.MovementSpeed, mapBorderService);

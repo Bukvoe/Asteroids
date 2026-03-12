@@ -12,7 +12,7 @@ namespace _Asteroids.CodeBase.Services
     {
         public event Action<Ufo> UfoDestroyed;
 
-        private readonly GenericFactory<Ufo, UfoSpawnPayload> _ufoFactory;
+        private readonly MonoFactory<Ufo, UfoSpawnPayload> _ufoFactory;
         private readonly GameMapService _gameMapService;
         private readonly GameConfigService _gameConfigService;
         private readonly StarshipService _starshipService;
@@ -25,7 +25,7 @@ namespace _Asteroids.CodeBase.Services
         private float _spawnCooldown;
 
         public EnemyService(
-            GenericFactory<Ufo, UfoSpawnPayload> ufoFactory,
+            MonoFactory<Ufo, UfoSpawnPayload> ufoFactory,
             GameMapService gameMapService,
             GameConfigService gameConfigService,
             StarshipService starshipService)

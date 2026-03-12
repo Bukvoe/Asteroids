@@ -22,8 +22,8 @@ namespace _Asteroids.CodeBase.Gameplay.Starship
         [Inject]
         private void Construct(
             GameConfigService gameConfigService,
-            GenericFactory<BulletWeapon, BulletWeaponSpawnPayload> bulletWeaponFactory,
-            GenericFactory<LaserWeapon, LaserWeaponSpawnPayload> laserWeaponFactory)
+            MonoFactory<BulletWeapon, BulletWeaponSpawnPayload> bulletWeaponFactory,
+            MonoFactory<LaserWeapon, LaserWeaponSpawnPayload> laserWeaponFactory)
         {
             var starshipConfig = gameConfigService.StarshipConfig;
 

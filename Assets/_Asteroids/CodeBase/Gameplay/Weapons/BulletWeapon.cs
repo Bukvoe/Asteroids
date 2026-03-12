@@ -8,13 +8,13 @@ namespace _Asteroids.CodeBase.Gameplay.Weapons
     public class BulletWeapon : MonoBehaviour, IWeapon
     {
         private BulletWeaponState _state;
-        private GenericFactory<Bullet, BulletSpawnPayload> _bulletFactory;
+        private MonoFactory<Bullet, BulletSpawnPayload> _bulletFactory;
         private float _bulletSpeed;
 
         public IWeaponState State => _state;
 
         [Inject]
-        public void Construct(BulletWeaponSpawnPayload spawnPayload, GenericFactory<Bullet, BulletSpawnPayload> bulletFactory)
+        public void Construct(BulletWeaponSpawnPayload spawnPayload, MonoFactory<Bullet, BulletSpawnPayload> bulletFactory)
         {
             _state = new BulletWeaponState(spawnPayload.Cooldown);
             _bulletFactory = bulletFactory;

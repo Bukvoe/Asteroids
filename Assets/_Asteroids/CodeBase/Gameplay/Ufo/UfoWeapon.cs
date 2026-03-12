@@ -15,7 +15,7 @@ namespace _Asteroids.CodeBase.Gameplay.Ufo
         private Transform _target;
 
         public void Initialize(
-            GenericFactory<BulletWeapon, BulletWeaponSpawnPayload> factory,
+            MonoFactory<BulletWeapon, BulletWeaponSpawnPayload> factory,
             float cooldown,
             float bulletSpeed,
             Transform target)

@@ -6,7 +6,7 @@ using Zenject;
 
 namespace _Asteroids.CodeBase.Factories
 {
-    public sealed class GenericFactory<T, TPayload> : IAsyncInitializableFactory, IDisposable
+    public sealed class MonoFactory<T, TPayload> : IAsyncInitializableFactory, IDisposable
         where T : MonoBehaviour
     {
         private readonly IInstantiator _instantiator;
@@ -15,7 +15,7 @@ namespace _Asteroids.CodeBase.Factories
         private readonly string _assetId;
         private T _prefab;
 
-        public GenericFactory(IInstantiator instantiator, IAssetService assetService, string assetId)
+        public MonoFactory(IInstantiator instantiator, IAssetService assetService, string assetId)
         {
             _instantiator = instantiator;
             _assetService = assetService;
