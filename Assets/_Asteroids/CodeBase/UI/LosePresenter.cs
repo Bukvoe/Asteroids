@@ -51,6 +51,7 @@ namespace _Asteroids.CodeBase.UI
             _view.UpdateBestScore(_playerProgress.BestScore);
             _view.UpdateRuns(_playerProgress.Runs);
             _view.UpdateUfoDestroyed(_playerProgress.UfoDestroyed);
+            _view.UpdateReviveButton(_currentRunService.CanRevive());
 
             _view.Show();
         }
@@ -67,6 +68,8 @@ namespace _Asteroids.CodeBase.UI
 
         private void OnReviveRequested()
         {
+            _view.Hide();
+            _currentRunService.ReviveStarship();
         }
     }
 }

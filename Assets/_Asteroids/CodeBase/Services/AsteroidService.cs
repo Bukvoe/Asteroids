@@ -64,6 +64,11 @@ namespace _Asteroids.CodeBase.Services
             _canSpawn = true;
         }
 
+        public void StopSpawning()
+        {
+            _canSpawn = false;
+        }
+
         private void SpawnAsteroid(AsteroidSize size, Vector2 spawnPosition)
         {
             var spawnRotation = _randomService.RandomAngle();

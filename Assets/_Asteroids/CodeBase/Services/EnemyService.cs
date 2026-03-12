@@ -67,6 +67,11 @@ namespace _Asteroids.CodeBase.Services
             _canSpawn = true;
         }
 
+        public void StopSpawning()
+        {
+            _canSpawn = false;
+        }
+
         private void SpawnUfo(Vector2 spawnPosition)
         {
             var ufoConfig = _gameConfigService.UfoConfig;

@@ -78,5 +78,10 @@ namespace _Asteroids.CodeBase.UI
         {
             _ufoDestroyedLabel.text = ufoDestroyed.ToString();
         }
+
+        public void UpdateReviveButton(bool isActive)
+        {
+            _reviveButton.gameObject.SetActive(isActive);
+        }
     }
 }

@@ -12,25 +12,27 @@ namespace _Asteroids.CodeBase.Gameplay.Ufo
         private bool _isEnteredToMap;
         private float _speed;
         private Vector2 _direction;
-        private Transform _target;
+        private StarshipService _starshipService;
         private GameMapService _mapService;
 
-        public void Initialize(Vector2 startPosition, Transform target, float speed, GameMapService mapService)
+        public void Initialize(Vector2 startPosition, StarshipService starshipService, float speed, GameMapService mapService)
         {
             transform.position = startPosition;
-            _target = target;
+            _starshipService = starshipService;
             _speed = speed;
             _mapService = mapService;
         }
 
         private void FixedUpdate()
         {
-            if (_target == null)
+            var starship = _starshipService.Starship;
+
+            if (starship == null)
             {
                 return;
             }
 
-            _direction = (_target.position - transform.position).normalized;
+            _direction = (starship.transform.position - transform.position).normalized;
 
             var newPosition = (Vector2)transform.position + _direction * (_speed * Time.fixedDeltaTime);
 
