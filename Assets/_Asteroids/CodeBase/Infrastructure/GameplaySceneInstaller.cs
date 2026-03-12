@@ -19,12 +19,12 @@ namespace _Asteroids.CodeBase.Infrastructure
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<GenericFactory<BulletWeapon, BulletWeaponSpawnPayload>>().AsSingle().WithArguments(AssetId.BULLET_WEAPON);
-            Container.BindInterfacesAndSelfTo<GenericFactory<Bullet, BulletSpawnPayload>>().AsSingle().WithArguments(AssetId.BULLET);
-            Container.BindInterfacesAndSelfTo<GenericFactory<LaserWeapon, LaserWeaponSpawnPayload>>().AsSingle().WithArguments(AssetId.LASER_WEAPON);
-            Container.BindInterfacesAndSelfTo<GenericFactory<Laser, LaserSpawnPayload>>().AsSingle().WithArguments(AssetId.LASER);
-            Container.BindInterfacesAndSelfTo<GenericFactory<Asteroid, AsteroidSpawnPayload>>().AsSingle().WithArguments(AssetId.ASTEROID);
-            Container.BindInterfacesAndSelfTo<GenericFactory<Ufo, UfoSpawnPayload>>().AsSingle().WithArguments(AssetId.UFO);
+            Container.BindInterfacesAndSelfTo<MonoFactory<BulletWeapon, BulletWeaponSpawnPayload>>().AsSingle().WithArguments(AssetId.BULLET_WEAPON);
+            Container.BindInterfacesAndSelfTo<MonoFactory<Bullet, BulletSpawnPayload>>().AsSingle().WithArguments(AssetId.BULLET);
+            Container.BindInterfacesAndSelfTo<MonoFactory<LaserWeapon, LaserWeaponSpawnPayload>>().AsSingle().WithArguments(AssetId.LASER_WEAPON);
+            Container.BindInterfacesAndSelfTo<MonoFactory<Laser, LaserSpawnPayload>>().AsSingle().WithArguments(AssetId.LASER);
+            Container.BindInterfacesAndSelfTo<MonoFactory<Asteroid, AsteroidSpawnPayload>>().AsSingle().WithArguments(AssetId.ASTEROID);
+            Container.BindInterfacesAndSelfTo<MonoFactory<Ufo, UfoSpawnPayload>>().AsSingle().WithArguments(AssetId.UFO);
             Container.BindInterfacesAndSelfTo<StarshipFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<UiFactory>().AsSingle();
 

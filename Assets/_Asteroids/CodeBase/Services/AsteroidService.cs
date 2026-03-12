@@ -12,7 +12,7 @@ namespace _Asteroids.CodeBase.Services
     {
         public event Action<Asteroid> AsteroidDestroyed;
 
-        private readonly GenericFactory<Asteroid, AsteroidSpawnPayload> _asteroidFactory;
+        private readonly MonoFactory<Asteroid, AsteroidSpawnPayload> _asteroidFactory;
         private readonly GameMapService _gameMapService;
         private readonly GameConfigService _gameConfigService;
         private readonly RandomService _randomService;
@@ -26,7 +26,7 @@ namespace _Asteroids.CodeBase.Services
         private float _spawnCooldown;
 
         public AsteroidService(
-            GenericFactory<Asteroid, AsteroidSpawnPayload> asteroidFactory,
+            MonoFactory<Asteroid, AsteroidSpawnPayload> asteroidFactory,
             GameMapService gameMapService,
             GameConfigService gameConfigService,
             RandomService randomService)
