@@ -74,3 +74,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e35f19108eba48aead6fc87bd2cb971c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Infrastructure.GameInstaller
+  _adConfig: {fileID: 11400000, guid: 02895a6482a22294889e378411e2a0c3, type: 2}
