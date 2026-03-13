@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d913a151747c45f89c914798d0e85dfd, type: 3}
+  m_Name: AdConfig
+  m_EditorClassIdentifier: Assembly-CSharp::_Asteroids.CodeBase.Configs.AdConfig
+  AppKey: 2584f73e5
+  BannerAdUnitId: r9i78e6tb11yp4dn
+  InterstitialAdUnitId: gfhh5d42kac1j6md
+  RewardedAdUnitId: 66vuekixfs9m7ads
