@@ -12,6 +12,8 @@ namespace _Asteroids.CodeBase.Services
 {
     public class CurrentRunService : IInitializable, IDisposable
     {
+        private const int MAX_STARSHIP_REVIVES = 1;
+
         public event Action ScoreChanged;
         public event Action RunEnded;
 
@@ -23,6 +25,8 @@ namespace _Asteroids.CodeBase.Services
         private readonly ISaveService _saveService;
         private readonly RunStats _runStats;
         private readonly IAnalyticsService _analyticsService;
+
+        public int RevivesRemain { get; private set; }
 
         public int Score => _runStats.Score;
 
@@ -54,6 +58,7 @@ namespace _Asteroids.CodeBase.Services
             _starshipService.StarshipDestroyed += OnStarshipDestroyed;
             _starshipService.WeaponFired += OnWeaponFired;
 
+            RevivesRemain = MAX_STARSHIP_REVIVES;
         }
 
         public void StartRun()
@@ -62,6 +67,26 @@ namespace _Asteroids.CodeBase.Services
 
             _asteroidService.StartSpawning();
             _enemyService.StartSpawning();
+        }
+
+        public void ReviveStarship()
+        {
+            if (!CanRevive())
+            {
+                return;
+            }
+
+            RevivesRemain--;
+
+            _starshipService.CreateStarship();
+
+            _asteroidService.StartSpawning();
+            _enemyService.StartSpawning();
+        }
+
+        public bool CanRevive()
+        {
+            return RevivesRemain > 0;
         }
 
         public void Dispose()
@@ -117,6 +142,9 @@ namespace _Asteroids.CodeBase.Services
 
         private void OnStarshipDestroyed()
         {
+            _asteroidService.StopSpawning();
+            _enemyService.StopSpawning();
+
             _analyticsService.TrackRunEnded(_runStats);
 
             UpdateProgress(_runStats);

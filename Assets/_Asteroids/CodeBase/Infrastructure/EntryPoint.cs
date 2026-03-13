@@ -1,3 +1,4 @@
+using _Asteroids.CodeBase.Services.Ad;
 using _Asteroids.CodeBase.Services.Asset;
 using _Asteroids.CodeBase.Services.SceneLoad;
 using Cysharp.Threading.Tasks;
@@ -9,11 +10,13 @@ namespace _Asteroids.CodeBase.Infrastructure
     {
         private readonly ISceneLoadService _sceneLoadService;
         private readonly IAssetService _assetService;
+        private readonly IAdService _adService;
 
-        public EntryPoint(ISceneLoadService sceneLoadService, IAssetService assetService)
+        public EntryPoint(ISceneLoadService sceneLoadService, IAssetService assetService, IAdService adService)
         {
             _sceneLoadService = sceneLoadService;
             _assetService = assetService;
+            _adService = adService;
         }
 
         public void Initialize()

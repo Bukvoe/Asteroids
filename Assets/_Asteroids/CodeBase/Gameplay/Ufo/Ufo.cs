@@ -27,8 +27,8 @@ namespace _Asteroids.CodeBase.Gameplay.Ufo
             MonoFactory<BulletWeapon, BulletWeaponSpawnPayload> bulletWeaponFactory,
             GameMapService mapBorderService)
         {
-            _movement.Initialize(spawnPayload.Position, starshipService.Starship.transform, spawnPayload.MovementSpeed, mapBorderService);
-            _weapon.Initialize(bulletWeaponFactory, spawnPayload.BulletWeaponCooldown, spawnPayload.BulletSpeed, starshipService.Starship.transform);
+            _movement.Initialize(spawnPayload.Position, starshipService, spawnPayload.MovementSpeed, mapBorderService);
+            _weapon.Initialize(bulletWeaponFactory, spawnPayload.BulletWeaponCooldown, spawnPayload.BulletSpeed, starshipService);
         }
 
         private void Start()

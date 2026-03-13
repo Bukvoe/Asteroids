@@ -2,6 +2,7 @@ using _Asteroids.CodeBase.Factories;
 using _Asteroids.CodeBase.Factories.Payloads;
 using _Asteroids.CodeBase.Gameplay.Common;
 using _Asteroids.CodeBase.Gameplay.Weapons;
+using _Asteroids.CodeBase.Services;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -12,13 +13,13 @@ namespace _Asteroids.CodeBase.Gameplay.Ufo
         [SerializeField, Required] private Transform _weaponsRoot;
 
         private BulletWeapon _bulletWeapon;
-        private Transform _target;
+        private StarshipService _starshipService;
 
         public void Initialize(
             MonoFactory<BulletWeapon, BulletWeaponSpawnPayload> factory,
             float cooldown,
             float bulletSpeed,
-            Transform target)
+            StarshipService starshipService)
         {
             var bulletWeaponSpawnPayload = new BulletWeaponSpawnPayload(
                 parent: _weaponsRoot,
@@ -27,17 +28,19 @@ namespace _Asteroids.CodeBase.Gameplay.Ufo
 
             _bulletWeapon = factory.Create(bulletWeaponSpawnPayload);
 
-            _target = target;
+            _starshipService = starshipService;
         }
 
         private void FixedUpdate()
         {
-            if (_target == null || !_bulletWeapon.CanShoot())
+            var starship = _starshipService.Starship;
+
+            if (starship == null || !_bulletWeapon.CanShoot())
             {
                 return;
             }
 
-            Vector2 direction = (_target.position - transform.position).normalized;
+            Vector2 direction = (starship.transform.position - transform.position).normalized;
             _bulletWeapon.Shoot(new ShootIntent(transform.position, direction, EntityTag.Enemy));
         }
     }
