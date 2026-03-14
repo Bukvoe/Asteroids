@@ -1,33 +1,21 @@
-using System.Threading.Tasks;
 using _Asteroids.CodeBase.Data;
-using Firebase;
+using Cysharp.Threading.Tasks;
 using Firebase.Analytics;
-using UnityEngine;
-using Zenject;
 
 namespace _Asteroids.CodeBase.Services.Analytics
 {
-    public class FirebaseAnalyticsService : IAnalyticsService, IInitializable
+    public class FirebaseAnalyticsService : IAnalyticsService
     {
-        private DependencyStatus _dependencyStatus = DependencyStatus.UnavailableOther;
+        private readonly FirebaseInitializer _firebaseInitializer;
 
-        public void Initialize()
+        public FirebaseAnalyticsService(FirebaseInitializer firebaseInitializer)
         {
-            _ = InitializeFirebaseAsync();
+            _firebaseInitializer = firebaseInitializer;
         }
 
-        private async Task InitializeFirebaseAsync()
+        public async UniTask InitializeAsync()
         {
-            _dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
-
-            if (_dependencyStatus != DependencyStatus.Available)
-            {
-                Debug.LogError($"Could not resolve Firebase dependencies: {_dependencyStatus}");
-                return;
-            }
-
-            FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
-            Debug.Log("Firebase initialized");
+            await _firebaseInitializer.InitializeAsync();
         }
 
         public void TrackRunStarted()

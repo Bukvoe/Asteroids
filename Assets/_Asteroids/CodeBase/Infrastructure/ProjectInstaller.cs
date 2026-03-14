@@ -3,6 +3,7 @@ using _Asteroids.CodeBase.Data;
 using _Asteroids.CodeBase.Services.Ad;
 using _Asteroids.CodeBase.Services.Analytics;
 using _Asteroids.CodeBase.Services.Asset;
+using _Asteroids.CodeBase.Services.Config;
 using _Asteroids.CodeBase.Services.Save;
 using _Asteroids.CodeBase.Services.SceneLoad;
 using Sirenix.OdinInspector;
@@ -21,6 +22,8 @@ namespace _Asteroids.CodeBase.Infrastructure
             Container.Bind<ISaveService>().To<PlayerPrefsSaveService>().AsSingle();
             Container.Bind<ISceneLoadService>().To<SceneLoadService>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelPlayAdService>().AsSingle().WithArguments(_adConfig);
+            Container.Bind<FirebaseInitializer>().AsSingle();
+            Container.Bind<IConfigProvider>().To<FirebaseRemoteConfigProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<FirebaseAnalyticsService>().AsSingle();
 
             Container.Bind<PlayerProgress>().FromMethod(ctx =>
