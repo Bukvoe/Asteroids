@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Asteroids.CodeBase.Configs;
 using _Asteroids.CodeBase.Gameplay.Asteroid;
+using _Asteroids.CodeBase.Services.Config;
 
 namespace _Asteroids.CodeBase.Services
 {
@@ -15,17 +16,19 @@ namespace _Asteroids.CodeBase.Services
         public UfoConfig UfoConfig { get; private set; }
         public ScoreConfig ScoreConfig { get; private set; }
 
-        public GameConfigService(GameConfig gameConfig)
+        public GameConfigService(IConfigProvider configProvider)
         {
-            StarshipConfig = gameConfig.Starship;
+            var config = configProvider.GetConfig();
 
-            AsteroidSpawnConfig = gameConfig.AsteroidSpawn;
-            _asteroidConfigs = gameConfig.Asteroids.ToDictionary(c => c.Size);
+            StarshipConfig = config.Starship;
 
-            EnemySpawnConfig = gameConfig.EnemySpawn;
-            UfoConfig = gameConfig.Ufo;
+            AsteroidSpawnConfig = config.AsteroidSpawn;
+            _asteroidConfigs = config.Asteroids.ToDictionary(c => c.Size);
 
-            ScoreConfig = gameConfig.Score;
+            EnemySpawnConfig = config.EnemySpawn;
+            UfoConfig = config.Ufo;
+
+            ScoreConfig = config.Score;
         }
 
         public AsteroidConfig GetAsteroidConfigBySize(AsteroidSize size)
