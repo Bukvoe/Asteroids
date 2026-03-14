@@ -1,19 +1,18 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace _Asteroids.CodeBase.Configs
 {
-    [CreateAssetMenu(menuName = "Configs/GameConfig")]
-    public class GameConfig : ScriptableObject
+
+    public class GameConfig
     {
-        [field: SerializeField] public StarshipConfig Starship { get; private set; }
+        public StarshipConfig Starship;
 
-        [field: SerializeField] public AsteroidSpawnConfig AsteroidSpawn { get; private set; }
-        [field: SerializeField] public List<AsteroidConfig> Asteroids { get; private set; }
+        public AsteroidSpawnConfig AsteroidSpawn;
+        public List<AsteroidConfig> Asteroids;
 
-        [field: SerializeField] public EnemySpawnConfig EnemySpawn { get; private set; }
-        [field: SerializeField] public UfoConfig Ufo { get; private set; }
+        public EnemySpawnConfig EnemySpawn;
+        public UfoConfig Ufo;
 
-        [field: SerializeField] public ScoreConfig Score { get; private set; }
+        public ScoreConfig Score;
     }
 }
