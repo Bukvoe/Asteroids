@@ -1,4 +1,3 @@
-using _Asteroids.CodeBase.Configs;
 using _Asteroids.CodeBase.Factories;
 using _Asteroids.CodeBase.Factories.Payloads;
 using _Asteroids.CodeBase.Gameplay.Asteroid;
@@ -15,7 +14,6 @@ namespace _Asteroids.CodeBase.Infrastructure
     public class GameplaySceneInstaller : MonoInstaller
     {
         [SerializeField, Required] private Camera _camera;
-        [SerializeField, Required] private GameConfig _gameConfig;
 
         public override void InstallBindings()
         {
@@ -28,7 +26,7 @@ namespace _Asteroids.CodeBase.Infrastructure
             Container.BindInterfacesAndSelfTo<StarshipFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<UiFactory>().AsSingle();
 
-            Container.Bind<GameConfigService>().AsSingle().WithArguments(_gameConfig);
+            Container.Bind<GameConfigService>().AsSingle();
             Container.Bind<SceneObjectService>().AsSingle().WithArguments(_camera);
             Container.Bind<RandomService>().AsTransient();
             Container.Bind<GameMapService>().AsSingle();
